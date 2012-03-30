@@ -50,6 +50,4 @@ socket.on( 'data', function( raw ) {
 
 I'm not sure how this works with TK102-2 and other similar devices, I wrote this strictly for the TK102 as I only have one of those. There is no security built in, anyone could push GPRMC data to your server.
 
-[![Build Status](https://secure.travis-ci.org/fvdm/nodejs-tk102.png?branch=master)](http://travis-ci.org/fvdm/nodejs-tk102)
-
 [![CC-BY-SA](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](creativecommons.org/licenses/by-sa/3.0/)
