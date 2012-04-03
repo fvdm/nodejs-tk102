@@ -12,10 +12,10 @@ This tells the device to send its location AFTER each **30** seconds and no more
 
 ## Setup script
 
-At the start of the script your find a couple of Settings:
+At the start of the script you find a couple of Settings:
 
 * **serverIP** - set to the same IP you configured in the SMS
-* **ServerPort** - set to the same Port you configured in the SMS
+* **serverPort** - set to the same Port you configured in the SMS
 * **maxConnections** - limits the amount of connections your server can handle at the same time. Set this to the amount of devices you are using.
 * **idleTimeout** - cuts off the connection when no data is received for N seconds. Don't set this too low, keep in mind that GPRS can be pretty slow, but not too high either to not waste slots for other connections.
 
@@ -37,7 +37,7 @@ socket.on( 'data', function( raw ) {
 #### Output
 
 ```javascript
-{ raw: '1203292316,0031698765432,GPRMC,144219.000,A,5213.0327,N,00516.7759,E,0.63,179.59,300312,,,A*6D,F,imei:123456789012345,123
+{ raw: '1203292316,0031698765432,GPRMC,144219.000,A,5213.0327,N,00516.7759,E,0.63,179.59,300312,,,A*6D,F,imei:123456789012345,123',
   datetime: '2012-03-30 16:42',
   phone: '0031698765432',
   gps: { date: '2012-03-30', time: '14:42:19.000', signal: 'F' },
