@@ -6,8 +6,7 @@
 	Contact: fr@nkl.in
 	Twitter: @unknownt
 	
-	Github:  http://github.com/fvdm/nodejs-tk102
-	Version: 1.0.0
+	Source:  http://fvdm.github.com/nodejs-tk102
 */
 
 // settings
