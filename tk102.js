@@ -55,7 +55,6 @@ function tk102( raw ) {
 			return '20'+ year +'-'+ month +'-'+ day;
 		});
 		var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
-			var hour = str[4] == 'V' ? hour + 12 : hour;
 			return hour +':'+ minute +':'+ second +'.'+ ms;
 		});
 		
@@ -66,7 +65,8 @@ function tk102( raw ) {
 			'gps': {
 				'date':		gpsdate,
 				'time':		gpstime,
-				'signal':	str[15]
+				'signal':	str[15],
+				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
 				'latitude':	parseFloat( fixGeo( str[5], str[6] ) ),
