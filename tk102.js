@@ -18,8 +18,6 @@ var idleTimeout = 10;
 
 // INIT
 var net = require('net');
-var activeConnections = 0;
-
 var server = net.createServer( function( socket ) {
 	if( idleTimeout > 0 ) {
 		socket.setTimeout( idleTimeout * 1000, function() {
@@ -28,24 +26,16 @@ var server = net.createServer( function( socket ) {
 	}
 }).listen( serverPort, serverIP );
 
+server.maxConnections = maxConnections;
+
 // connect
 server.on( 'connection', function( socket ) {
-	if( activeConnections >= maxConnections ) {
-		socket.end();
-		return;
-	}
 	socket.setEncoding( 'utf8' );
-	activeConnections++;
 	
 	// data
 	socket.on( 'data', function( raw ) {
 		var gps = tk102( raw );
 		console.log( gps );
-	});
-	
-	// disconnect
-	socket.on( 'close', function( socket ) {
-		activeConnections--;
 	});
 });
 
