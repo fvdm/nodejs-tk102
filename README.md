@@ -1,4 +1,4 @@
-### TK102 GPS server for Node.js
+## TK102 GPS server for Node.js
 
 The Xexun TK102 is a GPS device that can send coordinates over TCP to a server via GPRS. This Node.js script creates a TCP server that listens for GPRMC data, parsing it and dump it to the console. The parsed data is provided in a clean easy to use object, so you can easily store it in a database or push to a websocket server, for example.
 
@@ -16,7 +16,7 @@ At the start of the script you find a couple of Settings:
 
 * **serverIP** - set to the same IP you configured in the SMS
 * **serverPort** - set to the same Port you configured in the SMS
-* **maxConnections** - limits the amount of connections your server can handle at the same time. Set this to the amount of devices you are using.
+* **maxConnections** - limits the amount of connections your server can handle at the same time. Set this to the amount of devices you are using, for example.
 * **idleTimeout** - cuts off the connection when no data is received for N seconds. Don't set this too low, keep in mind that GPRS can be pretty slow, but not too high either to not waste slots for other connections.
 
 ## Usage
