@@ -41,6 +41,7 @@ server.on( 'connection', function( socket ) {
 
 function tk102( raw ) {
 	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+	var raw = raw.replace( /(^[\s\t\r\n]+|[\s\t\r\n]+$)/, '' );
 	var str = raw.split(',');
 	
 	// parse
