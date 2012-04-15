@@ -65,7 +65,7 @@ function tk102( raw ) {
 			'gps': {
 				'date':		gpsdate,
 				'time':		gpstime,
-				'signal':	str[15],
+				'signal':	str[15] == 'F' ? 'full' : 'low',
 				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
