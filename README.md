@@ -46,6 +46,24 @@ socket.on( 'data', function( raw ) {
   imei: '123456789012345' }
 ```
 
+* **raw:** the input string without trailing whitespace
+* **datetime:** the device 24h clock
+* **phone:** the admin phonenumber that initiated this tracking
+* **gps:**
+	* **date:** date as received from satellites
+	* **time:** time in 24h UTC as received from satellites
+	* **signal:** GPS signal strength, either _full_ or _low_
+	* **fix:** GPS fix, either _active_ or _invalid_
+* **geo:**
+	* **latitude:** position latitude
+	* **longitude:** position longitude
+	* **bearing:** direction in degrees
+* **speed:**
+	* **knots:** speed in knots per hour
+	* **kmh:** speed in kilometer per hour
+	* **mph:** speed in miles per hour
+* **imei:** device IMEI
+
 ## Note
 
 I'm not sure how this works with TK102-2 and other similar devices, I wrote this strictly for the TK102 as I only have one of those. There is no security built in, anyone could push GPRMC data to your server.
