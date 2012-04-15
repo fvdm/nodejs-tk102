@@ -69,9 +69,9 @@ function tk102( raw ) {
 				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
-				'heading':	parseInt( str[10] )
 				'latitude':	fixGeo( str[5], str[6] ),
 				'longitude':	fixGeo( str[7], str[8] ),
+				'bearing':	parseInt( str[10] )
 			},
 			'knots':	Math.round( str[9] * 1000 ) / 1000,
 			'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
