@@ -21,7 +21,7 @@ At the start of the script you find a couple of Settings:
 
 ## Usage
 
-The interesting part is the **Data** part:
+The interesting part is the **Data** part, this is where you put your code:
 
 ```javascript
 // data
@@ -34,15 +34,17 @@ socket.on( 'data', function( raw ) {
 * **raw** is the string as received
 * **gps** is the parsed object
 
-#### Output
+## Output
 
 ```javascript
-{ raw: '1203292316,0031698765432,GPRMC,144219.000,A,5213.0327,N,00516.7759,E,0.63,179.59,300312,,,A*6D,F,imei:123456789012345,123',
+{ raw: '1203301642,0031698765432,GPRMC,144219.000,A,5213.0327,N,00516.7759,E,0.63,179.59,300312,,,A*6D,F,imei:123456789012345,123',
   datetime: '2012-03-30 16:42',
   phone: '0031698765432',
-  gps: { date: '2012-03-30', time: '14:42:19.000', signal: 'F' },
+  gps: { date: '2012-03-30', time: '14:42:19.000', signal: 'full', fix: 'active' },
   geo: { latitude: 52.130326, longitude: 5.167759, heading: 179 },
-  kmh: 0.63,
+  knots: 0.63,
+  kmh: 1.167,
+  mph: 0.725,
   imei: '123456789012345' }
 ```
 
