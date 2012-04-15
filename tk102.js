@@ -69,9 +69,9 @@ function tk102( raw ) {
 				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
-				'latitude':	parseFloat( fixGeo( str[5], str[6] ) ),
-				'longitude':	parseFloat( fixGeo( str[7], str[8] ) ),
 				'heading':	parseInt( str[10] )
+				'latitude':	fixGeo( str[5], str[6] ),
+				'longitude':	fixGeo( str[7], str[8] ),
 			},
 			'knots':	Math.round( str[9] * 1000 ) / 1000,
 			'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
@@ -86,10 +86,6 @@ function tk102( raw ) {
 
 // clean geo positions
 function fixGeo( one, two ) {
-	var one = (two == 'S' || two == 'W' ? '-' : '') + one;
-	one = one / 100 +'';
-	one = one.replace( /^([0-9]+)\.([0-9]+)$/, function( match, num, dec ) {
-		return num +'.'+ dec.substr(0,6);
-	});
-	return one;
+	var one = (two == 'S' || two == 'W' ? '-' : '') + (one / 100);
+	return Math.round( one * 1000000 ) / 1000000;
 }
