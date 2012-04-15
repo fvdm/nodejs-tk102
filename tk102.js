@@ -73,7 +73,9 @@ function tk102( raw ) {
 				'longitude':	parseFloat( fixGeo( str[7], str[8] ) ),
 				'heading':	parseInt( str[10] )
 			},
-			'kmh':		parseFloat( str[9] ),
+			'knots':	Math.round( str[9] * 1000 ) / 1000,
+			'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
+			'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000,
 			'imei':		str[16].replace( 'imei:', '' )
 		};
 	}
