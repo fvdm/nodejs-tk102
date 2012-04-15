@@ -42,9 +42,7 @@ socket.on( 'data', function( raw ) {
   phone: '0031698765432',
   gps: { date: '2012-03-30', time: '14:42:19.000', signal: 'full', fix: 'active' },
   geo: { latitude: 52.130326, longitude: 5.167759, heading: 179 },
-  knots: 0.63,
-  kmh: 1.167,
-  mph: 0.725,
+  speed: { knots: 0.63, kmh: 1.167, mph: 0.725 },
   imei: '123456789012345' }
 ```
 
