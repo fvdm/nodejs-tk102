@@ -9,40 +9,57 @@
 	Source:  http://fvdm.github.com/nodejs-tk102
 */
 
-// settings
-var serverIP = '0.0.0.0';
-var serverPort = 1337;
-var maxConnections = 100;
-var idleTimeout = 10;
-
 // INIT
 var net = require('net');
-var server = net.createServer( function( socket ) {
-	if( idleTimeout > 0 ) {
-		socket.setTimeout( idleTimeout * 1000, function() {
-			socket.end();
-		});
+var EventEmitter = require('events').EventEmitter;
+
+var tk102 = new EventEmitter();
+
+// Create server
+tk102.createServer = function( settings ) {
+	if( !settings ) {
+		var settings = {
+			ip:		'0.0.0.0',	// default listen on all IPs
+			port:		0,		// 0 = random, 'listening' event reports port
+			connections:	10,		// 10 simultaneous connections
+			timeout:	10		// 10 seconds idle timeout
+		};
 	}
-}).listen( serverPort, serverIP );
-
-server.maxConnections = maxConnections;
-
-// connect
-server.on( 'connection', function( socket ) {
-	socket.setEncoding( 'utf8' );
 	
-	// data
-	socket.on( 'data', function( raw ) {
-		var gps = tk102( raw );
-		console.log( gps );
+	tk102.server = net.createServer( function( socket ) {
+		if( settings.timeout > 0 ) {
+			socket.setTimeout( settings.timeout * 1000, function() {
+				tk102.emit( 'timeout', socket );
+				socket.end();
+			});
+		}
+	}).listen( settings.port, settings.ip, function() {
+		tk102.emit( 'listening', tk102.server.address() );
 	});
-});
+	
+	tk102.server.maxConnections = settings.connections;
+	
+	tk102.server.on( 'connection', function( socket ) {
+		tk102.emit( 'connection', socket );
+		socket.setEncoding( 'utf8' );
+		
+		// data
+		socket.on( 'data', function( raw ) {
+			tk102.emit( 'data', raw );
+			
+			if( gps = tk102.parse( raw ) ) {
+				tk102.emit( 'track', gps );
+			}
+		});
+	});
+}
 
-function tk102( raw ) {
+// Parse GPRMC string
+tk102.parse = function( raw ) {
 	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
 	var raw = raw.replace( /(^[\s\t\r\n]+|[\s\t\r\n]+$)/, '' );
 	var str = raw.split(',');
-	var data = {};
+	var data = false;
 	
 	// only continue with correct input, else the server may quit...
 	if( raw.indexOf(',GPRMC,') && str.length == 18 ) {
@@ -69,8 +86,8 @@ function tk102( raw ) {
 				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
-				'latitude':	fixGeo( str[5], str[6] ),
-				'longitude':	fixGeo( str[7], str[8] ),
+				'latitude':	tk102.fixGeo( str[5], str[6] ),
+				'longitude':	tk102.fixGeo( str[7], str[8] ),
 				'bearing':	parseInt( str[10] )
 			},
 			'speed': {
@@ -86,8 +103,11 @@ function tk102( raw ) {
 	return data;
 }
 
-// clean geo positions
-function fixGeo( one, two ) {
+// Clean geo positions
+tk102.fixGeo = function( one, two ) {
 	var one = (two == 'S' || two == 'W' ? '-' : '') + (one / 100);
 	return Math.round( one * 1000000 ) / 1000000;
 }
+
+// All ready
+module.exports = tk102;
