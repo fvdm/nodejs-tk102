@@ -1,12 +1,17 @@
 /*
-	Xexun TK102 GPS server for Node.js
-	
-	Author:  Franklin van de Meent
-	Website: http://frankl.in
-	Contact: fr@nkl.in
-	Twitter: @unknownt
-	
-	Source:  http://fvdm.github.com/nodejs-tk102
+TK102 GPS server for Node.js
+
+Author:  Franklin van de Meent
+Website: http://frankl.in/
+Twitter: @unknownt
+
+Source:  http://fvdm.github.com/nodejs-tk102
+Version: 1.0.1
+Date:    2012-04-18
+
+License: CC BY-SA 3.0
+This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
 */
 
 // INIT

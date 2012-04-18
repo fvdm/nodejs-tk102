@@ -135,4 +135,10 @@ server.on( 'timeout', function( socket ) {
 
 I'm not sure how this works with TK102-2 and other similar devices, I wrote this strictly for the TK102 as I only have one of those. There is no security built in, anyone could push GPRMC data to your server.
 
-[![CC-BY-SA](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](creativecommons.org/licenses/by-sa/3.0/)
+## License
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
+
+[![CC-BY-SA](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
+
+[CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
