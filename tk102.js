@@ -110,7 +110,11 @@ tk102.parse = function( raw ) {
 
 // Clean geo positions
 tk102.fixGeo = function( one, two ) {
-	var one = (two == 'S' || two == 'W' ? '-' : '') + (one / 100);
+	var minutes = one.substr(-7, 7);
+	var degrees = parseInt( one.replace( minutes, '' ) );
+	var one = degrees + (minutes / 60);
+
+	var one = parseFloat( (two == 'S' || two == 'W' ? '-' : '') + one );
 	return Math.round( one * 1000000 ) / 1000000;
 }
 

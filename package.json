@@ -2,7 +2,7 @@
   "author": "Franklin van de Meent <fr@nkl.in> (http://frankl.in)",
   "name": "tk102",
   "description": "Xexun TK102 GPS server",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "homepage": "http://fvdm.github.com/nodejs-tk102",
   "repository": {
     "type": "git",
