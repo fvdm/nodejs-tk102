@@ -1,6 +1,6 @@
-[![Build Status](https://secure.travis-ci.org/fvdm/nodejs-tk102.png?branch=master)](http://travis-ci.org/fvdm/nodejs-tk102)
-
 ## TK102 GPS server for Node.js
+
+[![Build Status](https://secure.travis-ci.org/fvdm/nodejs-tk102.png?branch=master)](http://travis-ci.org/fvdm/nodejs-tk102)
 
 The Xexun TK102 is a GPS device that can send coordinates over TCP to a server via GPRS. This Node.js script creates a TCP server that listens for GPRMC data, parsing it and dump it to the console. The parsed data is provided in a clean easy to use object, so you can easily store it in a database or push to a websocket server, for example.
 
