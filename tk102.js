@@ -55,9 +55,14 @@ tk102.createServer = function( vars ) {
 		tk102.emit( 'connection', socket );
 		socket.setEncoding( 'utf8' );
 		
-		// data
-		socket.on( 'data', function( raw ) {
-			tk102.emit( 'data', raw );
+		var data = ''
+		
+		// receiving data
+		socket.on( 'data', function( chunk ) {
+			tk102.emit( 'data', chunk )
+			data += chunk
+		})
+		
 			
 			if( gps = tk102.parse( raw ) ) {
 				tk102.emit( 'track', gps );
