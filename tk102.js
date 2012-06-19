@@ -20,15 +20,17 @@ var EventEmitter = require('events').EventEmitter;
 
 var tk102 = new EventEmitter();
 
+// defaults
+tk102.settings = {
+	ip:				'0.0.0.0',	// default listen on all IPs
+	port:			0,			// 0 = random, 'listening' event reports port
+	connections:	10,			// 10 simultaneous connections
+	timeout:		10			// 10 seconds idle timeout
+}
+
 // Create server
 tk102.createServer = function( settings ) {
 	if( !settings ) {
-		var settings = {
-			ip:		'0.0.0.0',	// default listen on all IPs
-			port:		0,		// 0 = random, 'listening' event reports port
-			connections:	10,		// 10 simultaneous connections
-			timeout:	10		// 10 seconds idle timeout
-		};
 	}
 	
 	tk102.server = net.createServer( function( socket ) {
