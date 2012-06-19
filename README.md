@@ -137,8 +137,8 @@ I'm not sure how this works with TK102-2 and other similar devices, I wrote this
 
 ## License
 
-This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
+This code is released under COPYLEFT meaning you can do with it
+anything you like except copyrighting it. If possible it would
+be nice to include the source URL for future reference:
 
-[![CC-BY-SA](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
-
-[CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
+https://github.com/fvdm/nodejs-tk102

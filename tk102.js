@@ -1,17 +1,12 @@
 /*
 TK102 GPS server for Node.js
 
-Author:  Franklin van de Meent
-Website: http://frankl.in/
-Twitter: @unknownt
+License: COPYLEFT
+This code is released under COPYLEFT meaning you can do with it
+anything you like except copyrighting it. If possible it would
+be nice to include the source URL for future reference:
 
-Source:  http://fvdm.github.com/nodejs-tk102
-Version: 1.0.2
-Date:    2012-04-19
-
-License: CC BY-SA 3.0
-This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
-To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
+https://github.com/fvdm/nodejs-tk102
 */
 
 // INIT
