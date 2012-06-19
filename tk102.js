@@ -72,8 +72,17 @@ tk102.createServer = function( vars ) {
 			
 			var gps = {}
 			gps = tk102.parse( data )
-			if( data != '' && gps ) {
-				tk102.emit( 'track', gps )
+			if( data != '' ) {
+				var gps = tk102.parse( data )
+				if( gps ) {
+					tk102.emit( 'track', gps )
+				} else {
+					tk102.emit( 'fail', {
+						reason:	'Cannot parse GPS data from device',
+						socket:	socket,
+						input:	data
+					})
+				}
 			}
 			
 		})
