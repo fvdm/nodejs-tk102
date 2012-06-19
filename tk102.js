@@ -29,8 +29,13 @@ tk102.settings = {
 }
 
 // Create server
-tk102.createServer = function( settings ) {
-	if( !settings ) {
+tk102.createServer = function( vars ) {
+	
+	// override settings
+	if( typeof vars == 'object' && Object.keys(vars).length >= 1 ) {
+		for( var key in vars ) {
+			tk102.settings[ key ] = vars[ key ]
+		}
 	}
 	
 	tk102.server = net.createServer( function( socket ) {
