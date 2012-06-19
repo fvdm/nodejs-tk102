@@ -67,7 +67,7 @@ tk102.parse = function( raw ) {
 	var data = false;
 	
 	// only continue with correct input, else the server may quit...
-	if( raw.indexOf(',GPRMC,') && str.length == 18 ) {
+	if( str.length == 18 && str[2] == 'GPRMC' ) {
 		
 		// parse
 		var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
