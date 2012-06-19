@@ -71,7 +71,8 @@ tk102.createServer = function( vars ) {
 		socket.on( 'close', function() {
 			
 			var gps = {}
-			if( data != '' && gps = tk102.parse( data ) ) {
+			gps = tk102.parse( data )
+			if( data != '' && gps ) {
 				tk102.emit( 'track', gps )
 			}
 			
