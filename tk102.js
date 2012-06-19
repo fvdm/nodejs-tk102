@@ -44,7 +44,7 @@ tk102.createServer = function( vars ) {
 			})
 		}
 		
-	}).listen( settings.port, settings.ip, function() {
+	}).listen( tk102.settings.port, tk102.settings.ip, function() {
 		
 		// server ready
 		tk102.emit( 'listening', tk102.server.address() )
@@ -52,7 +52,7 @@ tk102.createServer = function( vars ) {
 	});
 	
 	// maximum number of slots
-	tk102.server.maxConnections = settings.connections
+	tk102.server.maxConnections = tk102.settings.connections
 	
 	// inbound connection
 	tk102.server.on( 'connection', function( socket ) {
