@@ -63,12 +63,16 @@ tk102.createServer = function( vars ) {
 			data += chunk
 		})
 		
+		// complete
+		socket.on( 'close', function() {
 			
-			if( gps = tk102.parse( raw ) ) {
-				tk102.emit( 'track', gps );
+			var gps = {}
+			if( data != '' && gps = tk102.parse( data ) ) {
+				tk102.emit( 'track', gps )
 			}
-		});
 	});
+			
+		})
 }
 
 // Parse GPRMC string
