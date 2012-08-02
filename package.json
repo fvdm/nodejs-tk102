@@ -1,14 +1,17 @@
 {
-	"author":			"Franklin van de Meent <fr@nkl.in> (http://frankl.in)",
-	"name":				"tk102",
-	"description":		"Unofficial Xexun TK102 GPS server",
-	"version":			"1.0.4",
-	"homepage":			"http://fvdm.github.com/nodejs-tk102",
-	"repository": {
-		"type":				"git",
-		"url":				"git://github.com/fvdm/nodejs-tk102.git"
+	"author": {
+		"name":		"Franklin van de Meent",
+		"email":	"fr@nkl.in",
+		"url":		"http://frankl.in"
 	},
-	"main":				"tk102.js",
+	"name":			"tk102",
+	"description":		"Unofficial Xexun TK102 GPS server",
+	"version":		"1.0.5",
+	"repository": {
+		"type":		"git",
+		"url":		"git://github.com/fvdm/nodejs-tk102.git"
+	},
+	"main":			"tk102.js",
 	"dependencies": {},
 	"devDependencies": {},
 	"optionalDependencies": {},
@@ -16,11 +19,7 @@
 		"node": "*"
 	},
 	"bugs": {
-		"url":			"https://github.com/fvdm/nodejs-tk102/issues"
+		"url":		"https://github.com/fvdm/nodejs-tk102/issues"
 	},
-	"tags": [
-		"gps",
-		"tk102",
-		"server"
-	]
+	"tags":			[ "gps", "tk102", "server" ]
 }

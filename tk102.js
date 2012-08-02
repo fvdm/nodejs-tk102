@@ -49,7 +49,7 @@ tk102.createServer = function( vars ) {
 		// server ready
 		tk102.emit( 'listening', tk102.server.address() )
 		
-	});
+	})
 	
 	// maximum number of slots
 	tk102.server.maxConnections = tk102.settings.connections
