@@ -10,17 +10,17 @@ https://github.com/fvdm/nodejs-tk102
 */
 
 // INIT
-var	net = require('net'),
-	EventEmitter = require('events').EventEmitter
+var net = require('net'),
+    EventEmitter = require('events').EventEmitter
 
 var tk102 = new EventEmitter()
 
 // defaults
 tk102.settings = {
-	ip:				'0.0.0.0',	// default listen on all IPs
-	port:			0,			// 0 = random, 'listening' event reports port
-	connections:	10,			// 10 simultaneous connections
-	timeout:		10			// 10 seconds idle timeout
+	ip:		'0.0.0.0',	// default listen on all IPs
+	port:		0,		// 0 = random, 'listening' event reports port
+	connections:	10,		// 10 simultaneous connections
+	timeout:	10		// 10 seconds idle timeout
 }
 
 // Create server
@@ -119,20 +119,20 @@ tk102.parse = function( raw ) {
 			'datetime':	datetime,
 			'phone':	str[1],
 			'gps': {
-				'date':			gpsdate,
-				'time':			gpstime,
-				'signal':		str[15] == 'F' ? 'full' : 'low',
-				'fix':			str[4] == 'A' ? 'active' : 'invalid'
+				'date':		gpsdate,
+				'time':		gpstime,
+				'signal':	str[15] == 'F' ? 'full' : 'low',
+				'fix':		str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
-				'latitude':		tk102.fixGeo( str[5], str[6] ),
+				'latitude':	tk102.fixGeo( str[5], str[6] ),
 				'longitude':	tk102.fixGeo( str[7], str[8] ),
 				'bearing':		parseInt( str[10] )
 			},
 			'speed': {
-				'knots':		Math.round( str[9] * 1000 ) / 1000,
-				'kmh':			Math.round( str[9] * 1.852 * 1000 ) / 1000,
-				'mph':			Math.round( str[9] * 1.151 * 1000 ) / 1000
+				'knots':	Math.round( str[9] * 1000 ) / 1000,
+				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
+				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
 			},
 			'imei':		str[16].replace( 'imei:', '' )
 		}
