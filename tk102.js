@@ -145,7 +145,7 @@ tk102.parse = function( raw ) {
 // Clean geo positions, with 6 decimals
 tk102.fixGeo = function( one, two ) {
 	var minutes = one.substr(-7, 7)
-	var degrees = parseInt( one.replace( minutes, '' ) )
+	var degrees = parseInt( one.replace( minutes, '' ), 10 )
 	var one = degrees + (minutes / 60)
 
 	var one = parseFloat( (two == 'S' || two == 'W' ? '-' : '') + one )
