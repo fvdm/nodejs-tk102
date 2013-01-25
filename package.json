@@ -21,5 +21,9 @@
   "engines": {
     "node":               "*"
   },
-  "keywords":             ["gps", "tk102", "server"]
+  "keywords":             ["gps", "tk102", "server"],
+  "license": {
+    "type":               "Public Domain",
+    "url":                "https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE"
+  }
 }
