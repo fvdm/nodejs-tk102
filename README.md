@@ -1,61 +1,76 @@
-## TK102 GPS server for Node.js
+TK102 GPS server for Node.js
+============================
 
-The Xexun TK102 is a GPS device that can send coordinates over TCP to a server via GPRS. This Node.js script creates a TCP server that listens for GPRMC data, parsing it and dump it to the console. The parsed data is provided in a clean easy to use object, so you can easily store it in a database or push to a websocket server, for example.
+The Xexun TK102 is a GPS device that can send coordinates over TCP to a server via GPRS. This Node.js script creates a TCP server that listens for GPRMC data, parse it and send the data to your post-process function. The parsed data is provided in a clean easy to use object, so you can easily store it in a database or push to a websocket server, for example.
 
-## Prepare device
 
-Assuming your simcard has enough SMS and data credits and the TK102 is configured for your provider's APN, simply send **adminip123456 IP PORT** where obviously IP is the server's IP and PORT is the port to listen on :) It cannot take hostnames as it has no dns features on board.
+Prepare device
+--------------
+
+Assuming your simcard has enough SMS and data credits and the TK102 is configured for your provider's APN, simply send `adminip123456 IP PORT` where obviously `IP` is the server's IP, `PORT` is the port to listen on and `123456` is your admin password. :) It cannot take hostnames as it has no dns features on board.
 
 Activate sending coordinates: **t030s003n123456**
 
-This tells the device to send its location AFTER each **30** seconds and no more than **3** times. 30 seconds is the minimum. Send t030s\*\*\*n123456 to go on for infinity. **s** can also be **m** or **h**. To kill send notn123456.
+This tells the device to send its location AFTER each **30** seconds and no more than **3** times. 30 seconds is the minimum. Send `t030s***n123456` to go on for infinity.
 
-## Installation
+* **s** can also be **m** or **h**
+* To end tracking send `notn123456`
 
-Either load the module with NPM:
 
-**npm install tk102**
+Installation
+------------
+
+### NPM registry
+
+The most easy way is to install from the [NPM registry](https://npmjs.org/). This is always the most recent *stable* version.
+
+   npm install tk102
+
+
+### Github source
+
+Or you can clone the Github repository for the most recent code, but this may be *untested*.
+
+   git clone https://github.com/fvdm/nodejs-tk102
+   npm install ./nodejs-tk102
+
+
+Usage
+-----
 
 ```javascript
-var server = require('tk102');
-```
-
-or load directly:
-
-```javascript
-var server = require('/path/to/tk102.js');
-```
-
-## Usage
-
-```javascript
-var server = require('tk102');
+var server = require('tk102')
 
 // start server
 server.createServer({
         port: 1337
-});
+})
 
 // incoming data
 server.on( 'track', function( gps ) {
-        console.log( gps );
-});
+        console.log( gps )
+})
 ```
 
-## Settings
+Settings
+--------
 
 ```javascript
 server.createServer({
-        ip:          '1.2.3.4',  // default 0.0.0.0 (all ips)
-        port:        0,          // default 0 = random, see 'listening' event
-        connections: 10,         // simultaneous connections
-        timeout:     10          // idle timeout in seconds
-});
+        ip:             '1.2.3.4',  // default 0.0.0.0 (all ips)
+        port:           0,          // default 0 = random, see 'listening' event
+        connections:    10,         // simultaneous connections
+        timeout:        10          // idle timeout in seconds
+})
 ```
 
-## Events
+Events
+------
 
-### track
+The server emits the following events about the server status and incoming GPS pushes.
+
+track ( gpsObject )
+-------------------
 
 The GPRMC push from the device.
 
@@ -67,8 +82,8 @@ server.on( 'track', function( gps ) {
           gps: { date: '2012-03-30', time: '14:42:19.000', signal: 'full', fix: 'active' },
           geo: { latitude: 52.130326, longitude: 5.167759, bearing: 179 },
           speed: { knots: 0.63, kmh: 1.167, mph: 0.725 },
-          imei: '123456789012345' };
-});
+          imei: '123456789012345' }
+})
 ```
 
 * **raw:** the input string without trailing whitespace
@@ -89,51 +104,58 @@ server.on( 'track', function( gps ) {
 	* **mph:** speed in miles per hour
 * **imei:** device IMEI
 
-### data
+data ( rawString )
+------------------
 
 The raw unprocessed inbound data.
 
 ```javascript
 server.on( 'data', function( raw ) {
-        console.log( 'Incoming data: '+ raw );
-});
+        console.log( 'Incoming data: '+ raw )
+})
 ```
 
-### listening
+listening ( listeningObject )
+-----------------------------
 
 Very useful to find out random port (0).
 
 ```javascript
 server.on( 'listening', function( listen ) {
         { port: 56751, family: 2, address: '0.0.0.0' }
-});
+})
 ```
 
-### connection
+connection ( socket )
+---------------------
 
 Emitted when a connection is established with the server, includes the socket.
 
 ```javascript
 server.on( 'connection', function( socket ) {
-        console.log( 'Connection from '+ socket.remoteAddress );
-});
+        console.log( 'Connection from '+ socket.remoteAddress )
+})
 ```
 
-### timeout
+timeout ( socket )
+------------------
 
 Emitted when a connection expires.
 
 ```javascript
 server.on( 'timeout', function( socket ) {
-        console.log( 'Time-out from '+ socket.remoteAddress );
-});
+        console.log( 'Time-out from '+ socket.remoteAddress )
+})
 ```
 
-## Note
+Notes
+-----
 
 I'm not sure how this works with TK102-2 and other similar devices, I wrote this strictly for the TK102 as I only have one of those. There is no security built in, anyone could push GPRMC data to your server.
 
-## Unlicense
+
+Unlicense
+---------
 
 This is free and unencumbered software released into the public domain.
 
