@@ -24,15 +24,15 @@ Installation
 
 The most easy way is to install from the [NPM registry](https://npmjs.org/). This is always the most recent *stable* version.
 
-   npm install tk102
+	npm install tk102
 
 
 ### Github source
 
 Or you can clone the Github repository for the most recent code, but this may be *untested*.
 
-   git clone https://github.com/fvdm/nodejs-tk102
-   npm install ./nodejs-tk102
+	git clone https://github.com/fvdm/nodejs-tk102
+	npm install ./nodejs-tk102
 
 
 Usage
