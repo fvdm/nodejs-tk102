@@ -150,7 +150,7 @@ tk102.parse = function( raw ) {
 			'geo': {
 				'latitude':	tk102.fixGeo( str[5], str[6] ),
 				'longitude':	tk102.fixGeo( str[7], str[8] ),
-				'bearing':		parseInt( str[10] )
+				'bearing':	parseInt( str[10] )
 			},
 			'speed': {
 				'knots':	Math.round( str[9] * 1000 ) / 1000,
