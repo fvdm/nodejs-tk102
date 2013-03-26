@@ -116,48 +116,119 @@ tk102.createServer = function( vars ) {
 // Parse GPRMC string
 tk102.parse = function( raw ) {
 	
-	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
-	var raw = raw.trim()
-	var str = raw.split(',')
 	var data = false
 	
-	// only continue with correct input, else the server may quit...
-	if( str.length == 18 && str[2] == 'GPRMC' ) {
+	if( raw.indexOf('GPRMC') ) {
+	
+		// TK102 old
+		// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+		var raw = raw.trim()
+		var str = raw.split(',')
 		
-		// parse
-		var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
-			return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
-		})
+		// only continue with correct input, else the server may quit...
+		if( str.length == 18 && str[2] == 'GPRMC' ) {
+			
+			// parse
+			var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
+				return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
+			})
+			
+			var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
+				return '20'+ year +'-'+ month +'-'+ day
+			})
+			
+			var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
+				return hour +':'+ minute +':'+ second +'.'+ ms
+			})
+			
+			data = {
+				'raw':		raw,
+				'datetime':	datetime,
+				'phone':	str[1],
+				'gps': {
+					'date':		gpsdate,
+					'time':		gpstime,
+					'signal':	str[15] == 'F' ? 'full' : 'low',
+					'fix':		str[4] == 'A' ? 'active' : 'invalid'
+				},
+				'geo': {
+					'latitude':	tk102.fixGeo( str[5], str[6] ),
+					'longitude':	tk102.fixGeo( str[7], str[8] ),
+					'bearing':	parseInt( str[10] )
+				},
+				'speed': {
+					'knots':	Math.round( str[9] * 1000 ) / 1000,
+					'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
+					'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
+				},
+				'imei':		str[16].replace( 'imei:', '' )
+			}
+		}
 		
-		var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
-			return '20'+ year +'-'+ month +'-'+ day
-		})
+	} else if( raw.match( /^#\d{15}##/ ) ) {
+	
+		// TK102-2
+		// #123456789012345##1#0000#AUT#01#2040081234aa5a#123.456789,E,1234.567891,N,0.00,356.60#260313#140227.000##
+		var data = {
+			raw:		raw,
+			datetime:	'',
+			phone:		null,
+			gps:		{},
+			geo:		{},
+			lac:		{},
+			speed:		{},
+			imei:		''
+		}
 		
-		var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
-			return hour +':'+ minute +':'+ second +'.'+ ms
-		})
+		str = raw.split('#')
 		
-		data = {
-			'raw':		raw,
-			'datetime':	datetime,
-			'phone':	str[1],
-			'gps': {
-				'date':		gpsdate,
-				'time':		gpstime,
-				'signal':	str[15] == 'F' ? 'full' : 'low',
-				'fix':		str[4] == 'A' ? 'active' : 'invalid'
-			},
-			'geo': {
-				'latitude':	tk102.fixGeo( str[5], str[6] ),
-				'longitude':	tk102.fixGeo( str[7], str[8] ),
-				'bearing':	parseInt( str[10] )
-			},
-			'speed': {
-				'knots':	Math.round( str[9] * 1000 ) / 1000,
-				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
-				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
-			},
-			'imei':		str[16].replace( 'imei:', '' )
+		if( str.length == 4 ) {
+			data.imei = str[1]
+		} else if( str.length == 13 ) {
+			data.zone = str[4]
+			
+			// gsm location
+			str[7].replace( /^(\d{3})(\d{3})(\w{8})$/, function( s, mcc, mnc, cid ) {
+				var lac = {
+					mcc: mcc,
+					mnc: mnc,
+					cellid: cid
+				}
+				data.lac = lac
+			})
+			
+			// geo data
+			var gps = str[8].split(',')
+			data.geo = {
+				latitude:	tk102.fixGeo( gps[0], gps[1] ),
+				longitude:	tk102.fixGeo( gps[2], gps[3] ),
+				altitude:	parseFloat( gps[5] ),
+				bearing:	null
+			}
+			
+			// date & time
+			str[9].replace( /^(\d{2})(\d{2})(\d{2})$/, function( s, d, m, y ) {
+				data.datetime = '20'+ y +'-'+ m +'-'+ d
+				data.gps.date = '20'+ y +'-'+ m +'-'+ d
+			})
+			
+			str[10].replace( /^(\d{2})(\d{2})(\d{2})\.(\d{3})$/, function( s, h, i, s, ms ) {
+				data.datetime += ' '+ h +':'+ i +':'+ s +'.'+ ms
+				data.gps.time = h +':'+ i +':'+ s +'.'+ ms
+			})
+			
+			// gps data
+			date.gps = {
+				signal:		null,
+				fix:		str[9] === '000000' ? false : true
+			}
+			
+			// speed
+			data.speed = {
+				knots:		Math.round( gps[4] * 1000 ) / 1000,
+				kmh:		Math.round( gps[4] * 1.852 * 1000 ) / 1000,
+				mph:		Math.round( gps[4] * 1.151 * 1000 ) / 1000
+			}
 		}
 	}
 	
