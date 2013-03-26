@@ -33,17 +33,17 @@ For more information, please refer to <http://unlicense.org>
 
 
 // INIT
-var net = require('net'),
-    EventEmitter = require('events').EventEmitter
+var net = require('net')
+var EventEmitter = require('events').EventEmitter
 
 var tk102 = new EventEmitter()
 
 // defaults
 tk102.settings = {
-	ip:		'0.0.0.0',	// default listen on all IPs
-	port:		0,		// 0 = random, 'listening' event reports port
-	connections:	10,		// 10 simultaneous connections
-	timeout:	10		// 10 seconds idle timeout
+	ip:          '0.0.0.0', // default listen on all IPs
+	port:        0,         // 0 = random, 'listening' event reports port
+	connections: 10,        // 10 simultaneous connections
+	timeout:     10         // 10 seconds idle timeout
 }
 
 // Create server
@@ -81,7 +81,7 @@ tk102.createServer = function( vars ) {
 	tk102.server.on( 'connection', function( socket ) {
 		
 		tk102.emit( 'connection', socket )
-		socket.setEncoding( 'utf8' )
+		socket.setEncoding('utf8')
 		var data = ''
 		
 		// receiving data
@@ -112,7 +112,7 @@ tk102.createServer = function( vars ) {
 		
 		// error
 		socket.on( 'error', function() {
-			tk102.emit( 'error')
+			tk102.emit('error')
 		})		
 		
 	})
@@ -143,26 +143,26 @@ tk102.parse = function( raw ) {
 		})
 		
 		data = {
-			'raw':		raw,
-			'datetime':	datetime,
-			'phone':	str[1],
+			'raw': raw,
+			'datetime': datetime,
+			'phone': str[1],
 			'gps': {
-				'date':		gpsdate,
-				'time':		gpstime,
-				'signal':	str[15] == 'F' ? 'full' : 'low',
-				'fix':		str[4] == 'A' ? 'active' : 'invalid'
+				'date': gpsdate,
+				'time': gpstime,
+				'signal': str[15] == 'F' ? 'full' : 'low',
+				'fix': str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
 				'latitude':	tk102.fixGeo( str[5], str[6] ),
-				'longitude':	tk102.fixGeo( str[7], str[8] ),
-				'bearing':		parseInt( str[10] )
+				'longitude': tk102.fixGeo( str[7], str[8] ),
+				'bearing': parseInt( str[10] )
 			},
 			'speed': {
-				'knots':	Math.round( str[9] * 1000 ) / 1000,
-				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
-				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
+				'knots': Math.round( str[9] * 1000 ) / 1000,
+				'kmh': Math.round( str[9] * 1.852 * 1000 ) / 1000,
+				'mph': Math.round( str[9] * 1.151 * 1000 ) / 1000
 			},
-			'imei':		str[16].replace( 'imei:', '' )
+			'imei': str[16].replace( 'imei:', '' )
 		}
 	}
 	
