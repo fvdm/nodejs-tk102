@@ -218,7 +218,7 @@ tk102.parse = function( raw ) {
 			})
 			
 			// gps data
-			date.gps = {
+			data.gps = {
 				signal:		null,
 				fix:		str[9] === '000000' ? false : true
 			}
