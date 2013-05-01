@@ -202,8 +202,8 @@ tk102.parse = function( raw ) {
 			data.geo = {
 				latitude:	tk102.fixGeo( gps[0], gps[1] ),
 				longitude:	tk102.fixGeo( gps[2], gps[3] ),
-				altitude:	parseFloat( gps[5] ),
-				bearing:	null
+				altitude:	null,
+				bearing:	parseFloat( gps[5] )
 			}
 			
 			// date & time
