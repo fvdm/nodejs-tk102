@@ -168,7 +168,12 @@ tk102.parse = function( raw ) {
 			phone:		null,
 			gps:		{},
 			geo:		{},
-			lac:		{},
+			gsm: {
+				mcc:	null,
+				mnc:	null,
+				cellid:	null,
+				signal:	null
+			},
 			speed:		{},
 			imei:		''
 		}
@@ -181,13 +186,11 @@ tk102.parse = function( raw ) {
 			data.zone = str[4]
 			
 			// gsm location
-			str[7].replace( /^(\d{3})(\d{3})(\w{8})$/, function( s, mcc, mnc, cid ) {
-				var lac = {
-					mcc: mcc,
-					mnc: mnc,
-					cellid: cid
-				}
-				data.lac = lac
+			str[7].replace( /^(\d{3})(\d{3})(\w{8})(\-(\d+))?$/, function( s, mcc, mnc, cid, s, signal ) {
+				data.gsm.mcc = mcc
+				data.gsm.mnc = mnc
+				data.gsm.cellid = cid
+				data.gsm.signal = signal || null
 			})
 			
 			// geo data
