@@ -100,6 +100,7 @@ tk102.createServer = function( vars ) {
 		
 		// complete
 		socket.on( 'close', function() {
+			tk102.emit( 'disconnection', socket || null )
 		})
 		
 	})
