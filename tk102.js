@@ -183,7 +183,7 @@ tk102.parse = function( raw ) {
 		if( str.length == 4 ) {
 			data.imei = str[1]
 		} else if( str.length == 13 ) {
-			data.zone = str[4]
+			data.password = str[4]
 			
 			// gsm location
 			str[7].replace( /^(\d{3})(\d{3})(\w{8})(\-(\d+))?$/, function( s, mcc, mnc, cid, s, signal ) {
