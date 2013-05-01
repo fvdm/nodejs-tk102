@@ -183,6 +183,7 @@ tk102.parse = function( raw ) {
 		if( str.length == 4 ) {
 			data.imei = str[1]
 		} else if( str.length == 13 ) {
+			data.imei = str[1]
 			data.password = str[4]
 			
 			// gsm location
