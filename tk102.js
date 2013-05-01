@@ -82,32 +82,24 @@ tk102.createServer = function( vars ) {
 		
 		tk102.emit( 'connection', socket )
 		socket.setEncoding( 'utf8' )
-		var data = ''
 		
 		// receiving data
 		socket.on( 'data', function( chunk ) {
 			tk102.emit( 'data', chunk )
-			data += chunk
+			gps = tk102.parse( data )
+			if( gps ) {
+				tk102.emit( 'track', gps )
+			} else {
+				tk102.emit( 'fail', {
+					reason:	'Cannot parse GPS data from device',
+					socket:	socket,
+					input:	data
+				})
+			}
 		})
 		
 		// complete
 		socket.on( 'close', function() {
-			
-			var gps = {}
-			gps = tk102.parse( data )
-			if( data != '' ) {
-				var gps = tk102.parse( data )
-				if( gps ) {
-					tk102.emit( 'track', gps )
-				} else {
-					tk102.emit( 'fail', {
-						reason:	'Cannot parse GPS data from device',
-						socket:	socket,
-						input:	data
-					})
-				}
-			}
-			
 		})
 		
 	})
