@@ -120,6 +120,14 @@ tk102.parse = function( raw ) {
 	var raw = raw.trim()
 	var str = raw.split(',')
 	var data = false
+
+    
+    var check = raw.split(/[,*#]/)
+    checksum = tk102.checksum(check.slice(2,15).join(','), check[15])
+    if (!checksum) {
+        return false
+    }
+
 	
 	// only continue with correct input, else the server may quit...
 	if( str.length == 18 && str[2] == 'GPRMC' ) {
@@ -174,6 +182,22 @@ tk102.fixGeo = function( one, two ) {
 	var one = parseFloat( (two == 'S' || two == 'W' ? '-' : '') + one )
 	return Math.round( one * 1000000 ) / 1000000
 }
+
+
+tk102.checksum= function(str,checksum) {
+    check= 0
+
+    for (c = 0; c < str.length; c++) {
+        check = check ^ str.charCodeAt(c)
+    }
+
+    if (parseInt(check.toString(16)) === parseInt(checksum)) {
+        return true
+    } else {
+        return false
+    }
+}
+
 
 // ready
 module.exports = tk102
