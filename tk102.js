@@ -110,6 +110,11 @@ tk102.createServer = function( vars ) {
 			
 		})
 		
+		// error
+		socket.on( 'error', function() {
+			tk102.emit( 'error')
+		})		
+		
 	})
 }
 
