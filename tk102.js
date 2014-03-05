@@ -112,8 +112,14 @@ tk102.createServer = function( vars ) {
 		})
 		
 		// error
-		socket.on( 'error', function() {
-			tk102.emit('error')
+		socket.on( 'error', function( error ) {
+			var err = new Error('Socket error')
+			
+			err.reason = err.message
+			err.socket = socket
+			err.input = tk102.settings
+			
+			tk102.emit( 'error', err )
 		})		
 		
 	})
