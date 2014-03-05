@@ -100,11 +100,12 @@ tk102.createServer = function( vars ) {
 				if( gps ) {
 					tk102.emit( 'track', gps )
 				} else {
-					tk102.emit( 'fail', {
-						reason:	'Cannot parse GPS data from device',
-						socket:	socket,
-						input:	data
-					})
+					var err = new Error('Connot parse GPS data from device')
+					err.reason = err.message
+					err.socket = socket
+					err.input = data
+					
+					tk102.emit( 'fail', err )
 				}
 			}
 			
