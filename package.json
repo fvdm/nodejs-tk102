@@ -6,7 +6,7 @@
   },
   "name":                 "tk102",
   "description":          "Unofficial Xexun TK102 GPS server",
-  "version":              "1.0.6",
+  "version":              "1.1.0",
   "repository": {
     "type":               "git",
     "url":                "git://github.com/fvdm/nodejs-tk102.git"
