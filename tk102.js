@@ -123,6 +123,15 @@ tk102.createServer = function( vars ) {
 		})		
 		
 	})
+	
+	tk102.server.on( 'error', function( error ) {
+		var err = new Error('Server error')
+		
+		err.reason = err.message
+		err.input = tk102.settings
+		
+		tk102.emit( 'error', err )
+	})
 }
 
 // Parse GPRMC string
