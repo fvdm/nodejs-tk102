@@ -117,7 +117,7 @@ tk102.createServer = function( vars ) {
 			
 			err.reason = err.message
 			err.socket = socket
-			err.input = tk102.settings
+			err.settings = tk102.settings
 			
 			tk102.emit( 'error', err )
 		})		
