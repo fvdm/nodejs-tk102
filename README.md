@@ -162,6 +162,28 @@ server.on( 'fail', function( err ) {
 })
 ```
 
+error ( Error )
+---------------
+
+Emitted when a server related error occured.
+
+`Error` is an `instanceof Error` with .stack trace.
+
+
+### Messages
+
+	Server error               Catch server failures
+	Socket error               Catch communication failures
+	IP or port not available   This catches EADDRNOTAVAIL errors
+
+
+```js
+server.on( 'error', function( err ) {
+	console.log( err )
+})
+```
+
+
 Notes
 -----
 
