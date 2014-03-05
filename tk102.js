@@ -125,7 +125,11 @@ tk102.createServer = function( vars ) {
 	})
 	
 	tk102.server.on( 'error', function( error ) {
-		var err = new Error('Server error')
+		if( error == 'EADDRNOTAVAIL' ) {
+			var err = new Error('IP or port not available')
+		} else {
+			var err = new Error('Server error')
+		}
 		
 		err.reason = err.message
 		err.input = tk102.settings
