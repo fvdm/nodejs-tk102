@@ -148,6 +148,20 @@ server.on( 'timeout', function( socket ) {
 })
 ```
 
+fail ( Error )
+--------------
+
+Emitted when data cannot be parsed.
+Useful for debugging device issues.
+
+`Error` is an `instanceof Error` with .stack trace.
+
+```js
+server.on( 'fail', function( err ) {
+	console.log( err )
+})
+```
+
 Notes
 -----
 
