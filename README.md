@@ -22,17 +22,16 @@ Installation
 
 ### NPM registry
 
-The most easy way is to install from the [NPM registry](https://npmjs.org/). This is always the most recent *stable* version.
+The most easy way is to install from the [npm registry](https://npmjs.org/). This is always the most recent *stable* version.
 
 	npm install tk102
 
 
 ### Github source
 
-Or you can clone the Github repository for the most recent code, but this may be *untested*.
+Or you can install from the sourcecode on Github for the most recent changes, but this may be *untested*.
 
-	git clone https://github.com/fvdm/nodejs-tk102
-	npm install ./nodejs-tk102
+	npm install git+https://github.com/fvdm/nodejs-tk102
 
 
 Usage
@@ -147,6 +146,42 @@ server.on( 'timeout', function( socket ) {
         console.log( 'Time-out from '+ socket.remoteAddress )
 })
 ```
+
+fail ( Error )
+--------------
+
+Emitted when data cannot be parsed.
+Useful for debugging device issues.
+
+`Error` is an `instanceof Error` with .stack trace.
+
+```js
+server.on( 'fail', function( err ) {
+	console.log( err )
+})
+```
+
+error ( Error )
+---------------
+
+Emitted when a server related error occured.
+
+`Error` is an `instanceof Error` with .stack trace.
+
+
+### Messages
+
+	Server error               Catch server failures
+	Socket error               Catch communication failures
+	IP or port not available   This catches EADDRNOTAVAIL errors
+
+
+```js
+server.on( 'error', function( err ) {
+	console.log( err )
+})
+```
+
 
 Notes
 -----
