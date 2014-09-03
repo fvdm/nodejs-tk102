@@ -173,7 +173,7 @@ tk102.parse = function( raw ) {
 				'fix': str[4] == 'A' ? 'active' : 'invalid'
 			},
 			'geo': {
-				'latitude':	tk102.fixGeo( str[5], str[6] ),
+				'latitude': tk102.fixGeo( str[5], str[6] ),
 				'longitude': tk102.fixGeo( str[7], str[8] ),
 				'bearing': parseInt( str[10] )
 			},
@@ -184,8 +184,25 @@ tk102.parse = function( raw ) {
 			},
 			'imei': str[16].replace( 'imei:', '' )
 		}
+		return data
+
 	}
-	
+
+	// (027042514687BR00140903A5925.7885N04617.0271E000.51801050.000000000000L00000000)
+	if( raw[0] == '(' && raw[13] == 'B' ) {
+
+		data = {
+			'raw': raw,
+			'geo': {
+				'latitude': tk102.fixGeo( raw.substr(24, 9), raw[33] ),
+				'longitude': tk102.fixGeo( raw.substr(34, 10), raw[44] )
+			},
+			'imei': raw.substr(1, 12)
+		}
+		return data
+
+	}
+
 	// done
 	return data
 }
