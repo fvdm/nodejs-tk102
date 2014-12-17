@@ -22,6 +22,58 @@ tk102.settings = {
   timeout: 10
 }
 
+
+// device data
+var specs = [
+  // 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+  function(raw) {
+    var result = null
+    try {
+      var raw = raw.trim()
+      var str = raw.split(',')
+
+      if( str.length == 18 && str[2] == 'GPRMC' ) {
+        var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
+          return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
+        })
+
+        var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
+          return '20'+ year +'-'+ month +'-'+ day
+        })
+
+        var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
+          return hour +':'+ minute +':'+ second +'.'+ ms
+        })
+
+        data = {
+          'raw': raw,
+          'datetime': datetime,
+          'phone': str[1],
+          'gps': {
+            'date': gpsdate,
+            'time': gpstime,
+            'signal': str[15] == 'F' ? 'full' : 'low',
+            'fix': str[4] == 'A' ? 'active' : 'invalid'
+          },
+          'geo': {
+            'latitude': tk102.fixGeo( str[5], str[6] ),
+            'longitude': tk102.fixGeo( str[7], str[8] ),
+            'bearing': parseInt( str[10] )
+          },
+          'speed': {
+            'knots': Math.round( str[9] * 1000 ) / 1000,
+            'kmh': Math.round( str[9] * 1.852 * 1000 ) / 1000,
+            'mph': Math.round( str[9] * 1.151 * 1000 ) / 1000
+          },
+          'imei': str[16].replace( 'imei:', '' )
+        }
+      }
+    } catch(e) {}
+    return result
+  }
+]
+
+
 // Create server
 tk102.createServer = function( vars ) {
 
@@ -116,55 +168,15 @@ tk102.createServer = function( vars ) {
 
 // Parse GPRMC string
 tk102.parse = function( raw ) {
-
-  // 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
-  var raw = raw.trim()
-  var str = raw.split(',')
-  var data = false
-
-  // only continue with correct input, else the server may quit...
-  if( str.length == 18 && str[2] == 'GPRMC' ) {
-
-    // parse
-    var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
-      return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
-    })
-
-    var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
-      return '20'+ year +'-'+ month +'-'+ day
-    })
-
-    var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
-      return hour +':'+ minute +':'+ second +'.'+ ms
-    })
-
-    data = {
-      'raw': raw,
-      'datetime': datetime,
-      'phone': str[1],
-      'gps': {
-        'date': gpsdate,
-        'time': gpstime,
-        'signal': str[15] == 'F' ? 'full' : 'low',
-        'fix': str[4] == 'A' ? 'active' : 'invalid'
-      },
-      'geo': {
-        'latitude': tk102.fixGeo( str[5], str[6] ),
-        'longitude': tk102.fixGeo( str[7], str[8] ),
-        'bearing': parseInt( str[10] )
-      },
-      'speed': {
-        'knots': Math.round( str[9] * 1000 ) / 1000,
-        'kmh': Math.round( str[9] * 1.852 * 1000 ) / 1000,
-        'mph': Math.round( str[9] * 1.151 * 1000 ) / 1000
-      },
-      'imei': str[16].replace( 'imei:', '' )
-    }
+  var data = null
+  var i = 0
+  while( data === null && i < specs.length )
+    specs[i]( raw )
+    i++
   }
-
-  // done
   return data
 }
+
 
 // Clean geo positions, with 6 decimals
 tk102.fixGeo = function( one, two ) {
