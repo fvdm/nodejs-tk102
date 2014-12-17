@@ -78,7 +78,7 @@ var specs = [
 process.on( 'uncaughtException', function( err ) {
   var error = new Error('uncaught exception')
   error.error = err
-  (tk102 && tk102.emit( 'error', error )) || console.trace( err )
+  console.trace( error )
 })
 
 // Create server
