@@ -25,5 +25,8 @@
   "license": {
     "type":               "Public Domain",
     "url":                "https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE"
+  },
+  "scripts": {
+    "test":               "node test.js"
   }
 }
