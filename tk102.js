@@ -74,6 +74,13 @@ var specs = [
 ]
 
 
+// Catch uncaught exceptions (server kill)
+process.on( 'uncaughtException', function( err ) {
+  var error = new Error('uncaught exception')
+  error.error = err
+  (tk102 && tk102.emit( 'error', error )) || console.trace( err )
+})
+
 // Create server
 tk102.createServer = function( vars ) {
 
