@@ -45,7 +45,7 @@ var specs = [
           return hour +':'+ minute +':'+ second +'.'+ ms
         })
 
-        data = {
+        result = {
           'raw': raw,
           'datetime': datetime,
           'phone': str[1],
@@ -177,8 +177,8 @@ tk102.createServer = function( vars ) {
 tk102.parse = function( raw ) {
   var data = null
   var i = 0
-  while( data === null && i < specs.length )
-    specs[i]( raw )
+  while( data === null && i < specs.length ) {
+    data = specs[i]( raw )
     i++
   }
   return data
