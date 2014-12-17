@@ -1,5 +1,7 @@
-TK102 GPS server for Node.js
-============================
+TK102 GPS server
+================
+
+Receive and parse GPS data from Xexun TK102 trackers.
 
 The Xexun TK102 is a GPS device that can send coordinates over TCP to 
 a server via GPRS. This Node.js script creates a TCP server that listens 
