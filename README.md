@@ -25,14 +25,14 @@ This tells the device to send its location AFTER each **30** seconds and
 no more than **3** times. 30 seconds is the minimum. 
 Send `t030s***n123456` to go on for infinity.
 
-* **s** can also be **m** or **h**
+* **s** (seconds) can also be **m** (minutes) or **h** (hours)
 * To end tracking send `notn123456`
 
 
 Installation
 ------------
 
-### NPM registry
+#### NPM registry
 
 The most easy way is to install from the [npm registry](https://npmjs.org/package/tk102).
 This is always the most recent *stable* version.
@@ -40,7 +40,7 @@ This is always the most recent *stable* version.
 `npm install tk102`
 
 
-### Github source
+#### Github source
 
 Or you can install from the source code on Github for the most recent changes, 
 but this may be *untested*.
@@ -86,7 +86,7 @@ The server emits the following events about the server status and incoming GPS p
 
 
 track ( gpsObject )
--------------------
+-----
 
 The GPRMC push from the device.
 
@@ -124,55 +124,55 @@ imei        | device IMEI
 
 
 data ( rawString )
-------------------
+----
 
 The raw unprocessed inbound data.
 
 ```javascript
 server.on( 'data', function( raw ) {
-        console.log( 'Incoming data: '+ raw )
+  console.log( 'Incoming data: '+ raw )
 })
 ```
 
 
 listening ( listeningObject )
------------------------------
+---------
 
 Very useful to find out random port (0).
 
 ```javascript
 server.on( 'listening', function( listen ) {
-        { port: 56751, family: 2, address: '0.0.0.0' }
+  // listen = { port: 56751, family: 2, address: '0.0.0.0' }
 })
 ```
 
 
 connection ( socket )
----------------------
+----------
 
 Emitted when a connection is established with the server, includes the socket.
 
 ```javascript
 server.on( 'connection', function( socket ) {
-        console.log( 'Connection from '+ socket.remoteAddress )
+  console.log( 'Connection from '+ socket.remoteAddress )
 })
 ```
 
 
 timeout ( socket )
-------------------
+-------
 
 Emitted when a connection expires.
 
 ```javascript
 server.on( 'timeout', function( socket ) {
-        console.log( 'Time-out from '+ socket.remoteAddress )
+  console.log( 'Time-out from '+ socket.remoteAddress )
 })
 ```
 
 
 fail ( Error )
---------------
+----
 
 Emitted when data cannot be parsed.
 Useful for debugging device issues.
@@ -187,14 +187,14 @@ server.on( 'fail', function( err ) {
 
 
 error ( Error )
----------------
+-----
 
 Emitted when a server related error occured.
 
 `Error` is an `instanceof Error` with .stack trace.
 
 
-### Messages
+#### Messages
 
 error                    | description
 ------------------------ | ---------------------------------
