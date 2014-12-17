@@ -246,3 +246,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
 
+
+Author
+------
+
+Franklin van de Meent
+| [Website](http://frankl.in)
+| [Github](https://github.com/fvdm)
