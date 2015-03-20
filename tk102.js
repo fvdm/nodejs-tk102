@@ -70,8 +70,7 @@ var specs = [
     catch (e) {}
     return result;
   }
-]
-
+];
 
 // Catch uncaught exceptions (server kill)
 process.on ('uncaughtException', function (err) {
@@ -158,7 +157,7 @@ tk102.createServer = function (vars) {
     err.input = tk102.settings;
     tk102.emit ('error', err);
   });
-}
+};
 
 // Parse GPRMC string
 tk102.parse = function (raw) {
@@ -169,7 +168,7 @@ tk102.parse = function (raw) {
     i++;
   }
   return data;
-}
+};
 
 // Clean geo positions, with 6 decimals
 tk102.fixGeo = function (one, two) {
@@ -178,7 +177,7 @@ tk102.fixGeo = function (one, two) {
   var one = degrees + (minutes / 60);
   var one = parseFloat ((two === 'S' || two === 'W' ? '-' : '') + one);
   return Math.round (one * 1000000) / 1000000;
-}
+};
 
 // ready
 module.exports = tk102;
