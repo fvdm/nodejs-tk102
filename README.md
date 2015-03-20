@@ -7,7 +7,25 @@ The Xexun TK102 is a GPS device that can send coordinates over TCP to
 a server via GPRS. This Node.js script creates a TCP server that listens 
 for GPRMC data, parse it and send the data to your post-process function. 
 The parsed data is provided in a clean easy to use object, so you can 
-easily store it in a database or push to a websocket server, for example.
+easily store it in a database or push to a websocket server, etc.
+
+
+Example
+-------
+
+```js
+var server = require ('tk102');
+
+// start server
+server.createServer ({
+  port: 1337
+});
+
+// incoming data
+server.on ('track', function (gps) {
+  console.log (gps);
+});
+```
 
 
 Prepare device
@@ -32,50 +50,21 @@ Send `t030s***n123456` to go on for infinity.
 Installation
 ------------
 
-#### NPM registry
+Stable: `npm install tk102`
 
-The most easy way is to install from the [npm registry](https://npmjs.org/package/tk102).
-This is always the most recent *stable* version.
-
-`npm install tk102`
-
-
-#### Github source
-
-Or you can install from the source code on Github for the most recent changes, 
-but this may be *untested*.
-
-`npm install fvdm/nodejs-tk102`
-
-
-Usage
------
-
-```javascript
-var server = require('tk102')
-
-// start server
-server.createServer({
-  port: 1337
-})
-
-// incoming data
-server.on( 'track', function( gps ) {
-  console.log( gps )
-})
-```
+Develop: `npm install fvdm/nodejs-tk102#develop`
 
 
 Settings
 --------
 
-```javascript
-server.createServer({
+```js
+server.createServer ({
   ip:           '1.2.3.4',  // default 0.0.0.0 (all ips)
   port:         0,          // default 0 = random, see 'listening' event
   connections:  10,         // simultaneous connections
   timeout:      10          // idle timeout in seconds
-})
+});
 ```
 
 
@@ -90,8 +79,8 @@ track ( gpsObject )
 
 The GPRMC push from the device.
 
-```javascript
-server.on( 'track', function( gps ) {
+```js
+server.on ('track', function (gps) {
   { raw: '1203301642,0031698765432,GPRMC,144219.000,A,5213.0327,N,00516.7759,E,0.63,179.59,300312,,,A*6D,F,imei:123456789012345,123',
     datetime: '2012-03-30 16:42',
     phone: '0031698765432',
@@ -128,10 +117,10 @@ data ( rawString )
 
 The raw unprocessed inbound data.
 
-```javascript
-server.on( 'data', function( raw ) {
-  console.log( 'Incoming data: '+ raw )
-})
+```js
+server.on ('data', function (raw) {
+  console.log ('Incoming data: '+ raw);
+});
 ```
 
 
@@ -140,10 +129,10 @@ listening ( listeningObject )
 
 Very useful to find out random port (0).
 
-```javascript
-server.on( 'listening', function( listen ) {
+```js
+server.on ('listening', function (listen) {
   // listen = { port: 56751, family: 2, address: '0.0.0.0' }
-})
+});
 ```
 
 
@@ -152,10 +141,10 @@ connection ( socket )
 
 Emitted when a connection is established with the server, includes the socket.
 
-```javascript
-server.on( 'connection', function( socket ) {
-  console.log( 'Connection from '+ socket.remoteAddress )
-})
+```js
+server.on ('connection', function (socket) {
+  console.log ('Connection from '+ socket.remoteAddress);
+});
 ```
 
 
@@ -164,10 +153,10 @@ timeout ( socket )
 
 Emitted when a connection expires.
 
-```javascript
-server.on( 'timeout', function( socket ) {
-  console.log( 'Time-out from '+ socket.remoteAddress )
-})
+```js
+server.on ('timeout', function (socket) {
+  console.log ('Time-out from '+ socket.remoteAddress);
+});
 ```
 
 
@@ -180,9 +169,9 @@ Useful for debugging device issues.
 `Error` is an `instanceof Error` with .stack trace.
 
 ```js
-server.on( 'fail', function( err ) {
-  console.log( err )
-})
+server.on ('fail', function (err) {
+  console.log (err);
+});
 ```
 
 
@@ -204,16 +193,16 @@ IP or port not available | This catches EADDRNOTAVAIL errors
 
 
 ```js
-server.on( 'error', function( err ) {
-  console.log( err )
-})
+server.on ('error', function (err) {
+  console.log (err);
+});
 ```
 
 
 Notes
 -----
 
-I'm not sure how this works with TK102-2 and other similar devices,
+I'm not sure how this works with other versions of the tracking device.
 I wrote this strictly for the TK102 as I only have one of those. There
 is no security built in, anyone could push GPRMC data to your server.
 
@@ -251,5 +240,5 @@ Author
 ------
 
 Franklin van de Meent
-| [Website](http://frankl.in)
+| [Website](https://frankl.in)
 | [Github](https://github.com/fvdm)
