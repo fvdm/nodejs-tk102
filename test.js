@@ -63,7 +63,7 @@ function doTest (err, label, tests) {
     });
 
     if (testErrors.length === 0) {
-      console.log (label +': \033[1mok\033[0m');
+      console.log (label +': \033[1m\033[32mok\033[0m');
     } else {
       console.error (label +': \033[1m\033[31mfailed\033[0m ('+ testErrors.join(', ') +')');
     }
