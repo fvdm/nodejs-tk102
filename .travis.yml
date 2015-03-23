@@ -6,3 +6,13 @@ node_js:
 - '0.11'
 - '0.10'
 - '0.8'
+deploy:
+  provider: npm
+  email:
+    secure: djJ4S/gqb4Qf/bJRgaHUQN/uJWNYuNphwTByQh+SVIhjJw9wdL/uVPdibdatetCnNMyrwVmyHmxF2jdf+R5dXgUUT7MzL792jUlZ0MaQGrlDhVX3Vx+dgOrkmH5N9vaqOngiayK2nqz7R+GvihgK4QK0APPV/jFQJcnEayp+W0A=
+  api_key:
+    secure: Uq+gasTJG4xmvBhUPqgMbFOfkplS+YQ1oPlPrNarhC4zQ6jbz+DVk83D52XjuStUOX319iHW6R9xMRdg+ag4g92l6VXm0HCYz735b5YqNcXK+JtNAozov9kXBSQ99NjZFU19U81zK8ksB3hLdbfYm28viG+WHw+oWdqpCpCqLyk=
+  on:
+    tags: true
+    repo: fvdm/nodejs-tk102
+    branch: master
