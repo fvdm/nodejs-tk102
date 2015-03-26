@@ -2,7 +2,7 @@
   "author": {
     "name":               "Franklin van de Meent",
     "email":              "fr@nkl.in",
-    "url":                "http://frankl.in"
+    "url":                "https://frankl.in"
   },
   "name":                 "tk102",
   "description":          "Unofficial Xexun TK102 GPS server",
@@ -21,7 +21,7 @@
   "engines": {
     "node":               ">=0.8.0"
   },
-  "keywords":             ["gps", "tk102", "server"],
+  "keywords":             ["gps", "tk102", "server", "tracker"],
   "license": {
     "type":               "Public Domain",
     "url":                "https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE"
