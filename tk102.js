@@ -121,7 +121,6 @@ tk102.createServer = function (vars) {
     socket.on( 'close', function() {
       data = Buffer.concat (data, size).toString ('utf8');
       var gps = {};
-      gps = tk102.parse (data);
       if (data != '') {
         var gps = tk102.parse (data);
         if (gps) {
