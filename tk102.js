@@ -92,7 +92,7 @@ tk102.createServer = function (vars) {
   tk102.server = net.createServer (function (socket) {
     // socket idle timeout
     if (tk102.settings.timeout > 0) {
-      socket.setTimeout (tk102.settings.timeout * 1000, function () {
+      socket.setTimeout (parseInt (tk102.settings.timeout * 1000), function () {
         tk102.emit ('timeout', socket);
         socket.end ();
       });
