@@ -1,6 +1,8 @@
 TK102 GPS server
 ================
 
+[![Build Status](https://travis-ci.org/fvdm/nodejs-tk102.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-tk102)
+
 Receive and parse GPS data from Xexun TK102 trackers.
 
 The Xexun TK102 is a GPS device that can send coordinates over TCP to 
