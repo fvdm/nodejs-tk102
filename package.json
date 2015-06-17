@@ -22,10 +22,7 @@
     "node":               ">=0.8.0"
   },
   "keywords":             ["gps", "tk102", "server", "tracker"],
-  "license": {
-    "type":               "Public Domain",
-    "url":                "https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE"
-  },
+  "license":              "Unlicense",
   "scripts": {
     "test":               "node test.js"
   }
