@@ -23,9 +23,9 @@ server.createServer ({
   port: 1337
 });
 
-// incoming data
+// incoming data, i.e. update a map
 server.on ('track', function (gps) {
-  console.log (gps);
+  updateMap (gps.geo.latitude, gps.geo.longitude);
 });
 ```
 
