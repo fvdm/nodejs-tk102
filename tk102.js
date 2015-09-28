@@ -189,6 +189,8 @@ tk102.createServer = function (vars) {
 
   // Start listening
   tk102.server.listen (tk102.settings.port, tk102.settings.ip);
+
+  return tk102;
 };
 
 // Parse GPRMC string
