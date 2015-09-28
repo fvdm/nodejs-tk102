@@ -17,10 +17,10 @@ var input = '1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,
 var errors = 0;
 process.on ('exit', function () {
   if (errors === 0) {
-    console.log ('\n\033[1mDONE, no errors.\033[0m\n');
+    console.log ('\n\u001b[1mDONE, no errors.\u001b[0m\n');
     process.exit (0);
   } else {
-    console.log ('\n\033[1mFAIL, '+ errors +' error'+ (errors > 1 ? 's' : '') +' occurred!\033[0m\n');
+    console.log ('\n\u001b[1mFAIL, '+ errors +' error'+ (errors > 1 ? 's' : '') +' occurred!\u001b[0m\n');
     process.exit (1);
   }
 });
@@ -50,7 +50,7 @@ function doNext () {
 // ])
 function doTest (err, label, tests) {
   if (err instanceof Error) {
-    console.error (label +': \033[1m\033[31mERROR\033[0m\n');
+    console.error (label +': \u001b[1m\u001b[31mERROR\u001b[0m\n');
     console.error (util.inspect (err, {depth: 10, colors: true}));
     console.log ();
     console.error (err.stack);
@@ -66,9 +66,9 @@ function doTest (err, label, tests) {
     });
 
     if (testErrors.length === 0) {
-      console.log (label +': \033[1m\033[32mok\033[0m');
+      console.log (label +': \u001b[1m\u001b[32mok\u001b[0m');
     } else {
-      console.error (label +': \033[1m\033[31mfailed\033[0m ('+ testErrors.join(', ') +')');
+      console.error (label +': \u001b[1m\u001b[31mfailed\u001b[0m ('+ testErrors.join(', ') +')');
     }
   }
 
