@@ -120,6 +120,7 @@ tk102.createServer = function (vars) {
   // inbound connection
   tk102.server.on ('connection', function (socket) {
     var connection = tk102.server.address ();
+
     connection.remoteAddress = socket.remoteAddress;
     connection.remotePort = socket.remotePort;
 
