@@ -80,12 +80,19 @@ tk102.settings = {
 };
 
 
+// Emit event
+tk102.event = function (name, value) {
+  tk102.emit (name, value);
+  tk102.emit ('log', name, value);
+};
+
 // Catch uncaught exceptions (server kill)
 process.on ('uncaughtException', function (err) {
   var error = new Error ('uncaught exception');
 
   error.error = err;
-  console.trace (error);
+  console.log (error);
+  tk102.event ('error', error);
 });
 
 // Create server
@@ -107,7 +114,7 @@ tk102.createServer = function (vars) {
 
   // server started
   tk102.server.on ('listening', function () {
-    tk102.emit ('listening', tk102.server.address ());
+    tk102.event ('listening', tk102.server.address ());
   });
 
   // inbound connection
@@ -115,7 +122,7 @@ tk102.createServer = function (vars) {
     var data = [];
     var size = 0;
 
-    tk102.emit ('connection', socket);
+    tk102.event ('connection', socket);
     socket.setEncoding ('utf8');
 
     if (tk102.settings.timeout > 0) {
@@ -123,12 +130,12 @@ tk102.createServer = function (vars) {
     }
 
     socket.on ('timeout', function () {
-      tk102.emit ('timeout', socket);
+      tk102.event ('timeout', socket);
       socket.destroy ();
     });
 
     socket.on ('data', function (ch) {
-      tk102.emit ('data', ch);
+      tk102.event ('data', ch);
       data.push (ch);
       size += ch.length;
     });
@@ -150,7 +157,7 @@ tk102.createServer = function (vars) {
           err.socket = socket;
           err.input = data;
 
-          tk102.emit ('fail', err);
+          tk102.event ('fail', err);
         }
       }
     });
@@ -163,7 +170,7 @@ tk102.createServer = function (vars) {
       err.socket = socket;
       err.settings = tk102.settings;
 
-      tk102.emit ('error', err);
+      tk102.event ('error', err);
     });
   });
 
@@ -177,7 +184,7 @@ tk102.createServer = function (vars) {
     err.reason = error.message;
     err.input = tk102.settings;
 
-    tk102.emit ('error', err);
+    tk102.event ('error', err);
   });
 
   // Start listening
