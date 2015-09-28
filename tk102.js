@@ -119,8 +119,6 @@ tk102.createServer = function (vars) {
 
   // inbound connection
   tk102.server.on ('connection', function (socket) {
-    var data = [];
-    var size = 0;
     var connection = tk102.server.address ();
     connection.remoteAddress = socket.remoteAddress;
     connection.remotePort = socket.remotePort;
@@ -137,16 +135,12 @@ tk102.createServer = function (vars) {
       socket.destroy ();
     });
 
-    socket.on ('data', function (ch) {
-      tk102.event ('data', ch);
-      data.push (ch);
-      size += ch.length;
-    });
-
+    socket.on ('data', function (data) {
       var gps = {};
       var err = null;
 
-      data = Buffer.concat (data, size) .toString ('utf8');
+      data = data.trim ();
+      tk102.event ('data', data);
 
       if (data !== '') {
         gps = tk102.parse (data);
