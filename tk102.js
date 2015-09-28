@@ -100,21 +100,15 @@ tk102.createServer = function (vars) {
   }
 
   // start server
-  tk102.server = net.createServer (function (socket) {
-    // socket idle timeout
-    if (tk102.settings.timeout > 0) {
-      socket.setTimeout (parseInt (tk102.settings.timeout * 1000, 10), function () {
-        tk102.emit ('timeout', socket);
-        socket.end ();
-      });
-    }
-  }) .listen (tk102.settings.port, tk102.settings.ip, function () {
-    // server ready
-    tk102.emit ('listening', tk102.server.address ());
-  });
+  tk102.server = net.createServer ();
 
   // maximum number of slots
   tk102.server.maxConnections = tk102.settings.connections;
+
+  // server started
+  tk102.server.on ('listening', function () {
+    tk102.emit ('listening', tk102.server.address ());
+  });
 
   // inbound connection
   tk102.server.on ('connection', function (socket) {
@@ -123,6 +117,15 @@ tk102.createServer = function (vars) {
 
     tk102.emit ('connection', socket);
     socket.setEncoding ('utf8');
+
+    if (tk102.settings.timeout > 0) {
+      socket.setTimeout (parseInt (tk102.settings.timeout * 1000, 10));
+    }
+
+    socket.on ('timeout', function () {
+      tk102.emit ('timeout', socket);
+      socket.destroy ();
+    });
 
     socket.on ('data', function (ch) {
       tk102.emit ('data', ch);
@@ -134,7 +137,7 @@ tk102.createServer = function (vars) {
       var gps = {};
       var err = null;
 
-      data = Buffer.concat (data, size).toString ('utf8');
+      data = Buffer.concat (data, size) .toString ('utf8');
 
       if (data !== '') {
         gps = tk102.parse (data);
@@ -156,7 +159,7 @@ tk102.createServer = function (vars) {
     socket.on ('error', function (error) {
       var err = new Error ('Socket error');
 
-      err.reason = err.message;
+      err.reason = error.message;
       err.socket = socket;
       err.settings = tk102.settings;
 
@@ -171,11 +174,14 @@ tk102.createServer = function (vars) {
       err = new Error ('IP or port not available');
     }
 
-    err.reason = err.message;
+    err.reason = error.message;
     err.input = tk102.settings;
 
     tk102.emit ('error', err);
   });
+
+  // Start listening
+  tk102.server.listen (tk102.settings.port, tk102.settings.ip);
 };
 
 // Parse GPRMC string
