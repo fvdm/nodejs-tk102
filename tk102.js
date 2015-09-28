@@ -121,8 +121,11 @@ tk102.createServer = function (vars) {
   tk102.server.on ('connection', function (socket) {
     var data = [];
     var size = 0;
+    var connection = tk102.server.address ();
+    connection.remoteAddress = socket.remoteAddress;
+    connection.remotePort = socket.remotePort;
 
-    tk102.event ('connection', socket);
+    tk102.event ('connection', connection);
     socket.setEncoding ('utf8');
 
     if (tk102.settings.timeout > 0) {
@@ -130,7 +133,7 @@ tk102.createServer = function (vars) {
     }
 
     socket.on ('timeout', function () {
-      tk102.event ('timeout', socket);
+      tk102.event ('timeout', connection);
       socket.destroy ();
     });
 
@@ -140,7 +143,6 @@ tk102.createServer = function (vars) {
       size += ch.length;
     });
 
-    socket.on ('close', function () {
       var gps = {};
       var err = null;
 
@@ -154,12 +156,17 @@ tk102.createServer = function (vars) {
         } else {
           err = new Error ('Cannot parse GPS data from device');
           err.reason = err.message;
-          err.socket = socket;
           err.input = data;
+          err.connection = connection;
 
           tk102.event ('fail', err);
         }
       }
+    });
+
+    socket.on ('close', function (hadError) {
+      connection.hadError = hadError;
+      tk102.event ('disconnect', connection);
     });
 
     // error
