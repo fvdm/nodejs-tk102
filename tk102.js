@@ -63,7 +63,8 @@ var specs = [
             'kmh': Math.round (str [9] * 1.852 * 1000) / 1000,
             'mph': Math.round (str [9] * 1.151 * 1000) / 1000
           },
-          'imei': str [16] .replace ('imei:', '')
+          'imei': str [16] .replace ('imei:', ''),
+          'checksum': tk102.checksum (raw)
         };
       }
     }
@@ -176,6 +177,23 @@ tk102.fixGeo = function (one, two) {
   var one = degrees + (minutes / 60);
   var one = parseFloat ((two === 'S' || two === 'W' ? '-' : '') + one);
   return Math.round (one * 1000000) / 1000000;
+};
+
+// Check checksum in raw string
+tk102.checksum = function (str) {
+  str = str.trim ();
+  str = str.split (/[,*#]/);
+  var strsum = parseInt (str [15], 10);
+  var strchk = str.slice (2, 15) .join (',');
+  var check = 0;
+  var i;
+
+  for (i = 0; i < strchk.length; i++) {
+    check = check ^ strchk.charCodeAt (i);
+  }
+
+  check = parseInt (check.toString (16), 10);
+  return (check === strsum);
 };
 
 // ready
