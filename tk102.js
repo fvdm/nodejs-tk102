@@ -146,7 +146,7 @@ tk102.createServer = function (vars) {
         gps = tk102.parse (data);
 
         if (gps) {
-          tk102.emit ('track', gps);
+          tk102.event ('track', gps);
         } else {
           err = new Error ('Cannot parse GPS data from device');
           err.reason = err.message;
