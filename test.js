@@ -10,6 +10,9 @@ License:      Unlicense / Public Domain (see UNLICENSE file)
 
 var app = require ('./');
 
+// Str to work with
+var input = '1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123';
+
 // handle exits
 var errors = 0;
 process.on ('exit', function () {
@@ -72,11 +75,32 @@ function doTest (err, label, tests) {
   doNext ();
 }
 
+// checksum valid
+queue.push (function () {
+  var data = app.checksum (input);
+  doTest (null, 'checksum valid', [
+    ['type', typeof data === 'boolean'],
+    ['value', data === true]
+  ]);
+});
+
+// checksum invalid
+queue.push (function () {
+  var data = app.checksum (input.toLowerCase ());
+  doTest (null, 'checksum invalid', [
+    ['type', typeof data === 'boolean'],
+    ['value', data === false]
+  ]);
+});
+
 // parser valid
 queue.push (function () {
-  var data = app.parse ('1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123');
+  var data = app.parse (input);
   doTest (data, 'parse valid', [
     ['type', data instanceof Object],
+    ['raw', data.raw === input],
+    ['checksum type', typeof data.checksum === 'boolean'],
+    ['checksum value', data.checksum === true],
     ['phone', data.phone === '0031698765432'],
     ['imei', data.imei === '123456789012345'],
     ['datetime', data.datetime === '2012-03-29 23:16'],
