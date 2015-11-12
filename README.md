@@ -154,7 +154,7 @@ server.on ('listening', function (listen) {
 ### connection
 **( socket )**
 
-Emitted when a connection is established with the server, includes the socket.
+Emitted when a connection is established with the server, includes the socket basics.
 
 ```js
 server.on ('connection', function (socket) {
@@ -166,7 +166,7 @@ server.on ('connection', function (socket) {
 ### timeout
 **( socket )**
 
-Emitted when a connection expires.
+Emitted when a connection expires, includes the socket basics.
 
 ```js
 server.on ('timeout', function (socket) {
