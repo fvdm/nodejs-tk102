@@ -60,12 +60,17 @@ Develop: `npm install fvdm/nodejs-tk102#develop`
 Settings
 --------
 
+name        | type    | default | description
+:-----------|:--------|:--------|:----------------------------------
+ip          | string  | 0.0.0.0 | Listen on IP, `0.0.0.0` is all IPs
+port        | integer | 0       | Listen on port, `0` is random (see [listening](#listening) event)
+connections | integer | 10      | Maximum simultaneous connections
+timeout     | integer | 10      | Idle time out in seconds
+
 ```js
 server.createServer ({
-  ip:           '1.2.3.4',  // default 0.0.0.0 (all ips)
-  port:         0,          // default 0 = random, see 'listening' event
-  connections:  10,         // simultaneous connections
-  timeout:      10          // idle timeout in seconds
+  ip: '1.2.3.4',
+  port: 0
 });
 ```
 
