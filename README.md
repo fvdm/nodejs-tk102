@@ -112,8 +112,8 @@ raw         | the input string without trailing whitespace
 datetime    | the device 24h clock
 phone       | the admin phonenumber that initiated this tracking
 gps         |
-- date      | date as received from satellites
-- time      | time in 24h UTC as received from satellites
+- date      | date as received from GPS
+- time      | time in 24h UTC as received from GPS
 - signal    | signal strength, either _full_ or _low_
 - fix       | GPS fix, either _active_ or _invalid_
 geo         |
