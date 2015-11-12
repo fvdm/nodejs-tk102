@@ -228,9 +228,17 @@ server.on ('log', function (name, value) {
 Notes
 -----
 
-I'm not sure how this works with other versions of the tracking device.
-I wrote this strictly for the TK102 as I only have one of those. There
-is no security built in, anyone could push GPRMC data to your server.
+There is no security built in, anyone could push data to your server.
+
+The parsed object is based on a lot of testing in the field and incomplete
+documentation, I hope I got it right. There are many variations of the TK102
+tracker available with each different data formats. It may be possible your
+device or even mine is one of the clones and incompatible with this module.
+
+If you can, please provide multiple responses from the [data](#data) event
+in a [Github issue](https://github.com/fvdm/nodejs-tk102/issues) (public) or
+contact me [directly](https://frankl.in/contact), your data is handled
+confidentially.
 
 
 Unlicense
