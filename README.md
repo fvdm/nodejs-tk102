@@ -89,8 +89,8 @@ Events
 The server emits the following events about the server status and incoming GPS pushes.
 
 
-track ( gpsObject )
------
+### track
+**( gpsObject )**
 
 The GPRMC push from the device.
 
@@ -127,8 +127,8 @@ speed       |
 imei        | device IMEI
 
 
-data ( rawString )
-----
+### data
+**( rawString )**
 
 The raw unprocessed inbound data.
 
@@ -139,8 +139,8 @@ server.on ('data', function (raw) {
 ```
 
 
-listening ( listeningObject )
----------
+### listening
+**( listeningObject )**
 
 Very useful to find out random port (0).
 
@@ -151,8 +151,8 @@ server.on ('listening', function (listen) {
 ```
 
 
-connection ( socket )
-----------
+### connection
+**( socket )**
 
 Emitted when a connection is established with the server, includes the socket.
 
@@ -163,8 +163,8 @@ server.on ('connection', function (socket) {
 ```
 
 
-timeout ( socket )
--------
+### timeout
+**( socket )**
 
 Emitted when a connection expires.
 
@@ -175,8 +175,8 @@ server.on ('timeout', function (socket) {
 ```
 
 
-fail ( Error )
-----
+### fail
+**( Error )**
 
 Emitted when data cannot be parsed.
 Useful for debugging device issues.
@@ -190,8 +190,8 @@ server.on ('fail', function (err) {
 ```
 
 
-error ( Error )
------
+### error
+**( Error )**
 
 Emitted when a server related error occured.
 
