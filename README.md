@@ -92,7 +92,7 @@ The server emits the following events about the server status and incoming GPS p
 ### track
 **( gpsObject )**
 
-The GPRMC push from the device.
+The data push from the device.
 
 ```js
 server.on ('track', function (gps) {
@@ -107,7 +107,7 @@ server.on ('track', function (gps) {
 ```
 
 property    | description
------------ | --------------------------------------------------
+:-----------|:--------------------------------------------------
 raw         | the input string without trailing whitespace
 datetime    | the device 24h clock
 phone       | the admin phonenumber that initiated this tracking
@@ -201,7 +201,7 @@ Emitted when a server related error occured.
 #### Messages
 
 error                    | description
------------------------- | ---------------------------------
+:------------------------|:---------------------------------
 Server error             | Catch server failures
 Socket error             | Catch communication failures
 IP or port not available | This catches EADDRNOTAVAIL errors
