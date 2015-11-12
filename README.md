@@ -12,6 +12,14 @@ The parsed data is provided in a clean easy to use object, so you can
 easily store it in a database or push to a websocket server, etc.
 
 
+- [Example](#example)
+- [Prepare device](#prepare-device)
+- [Installation](#installation)
+- [Settings](#settings)
+- [Events](#events)
+- [Notes](#notes)
+
+
 Example
 -------
 
