@@ -163,6 +163,18 @@ server.on ('connection', function (socket) {
 ```
 
 
+### disconnect
+**( socket )**
+
+Emitted when a connection is ended, includes the socket basics.
+
+```js
+server.on ('disconnect', function (socket) {
+  console.log ('Disconnected device '+ socket.remoteAddress);
+});
+```
+
+
 ### timeout
 **( socket )**
 
