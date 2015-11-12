@@ -206,6 +206,25 @@ server.on ('error', function (err) {
 ```
 
 
+### log
+**( name, data )**
+
+Emitted on of the above events.
+Useful for debugging and logging.
+
+argument | type   | description
+:--------|:-------|:------------------------
+name     | string | Event name, i.e. `track`
+value    | mixed  | Data from the event
+
+```js
+server.on ('log', function (name, value) {
+  console.log ('Event: ' + name);
+  console.log (value);
+});
+```
+
+
 Notes
 -----
 
