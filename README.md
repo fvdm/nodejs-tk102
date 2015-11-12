@@ -250,15 +250,19 @@ Notes
 
 There is no security built in, anyone could push data to your server.
 
-The parsed object is based on a lot of testing in the field and incomplete
-documentation, I hope I got it right. There are many variations of the TK102
-tracker available with each different data formats. It may be possible your
-device or even mine is one of the clones and incompatible with this module.
+The parsed object is based on a lot of testing in the field and
+incomplete documentation, I hope I got it right. There are many
+variations of the TK102 tracker available with each different data
+formats. It may be possible your device or even mine is one of the
+clones and incompatible with this module.
 
-If you can, please provide multiple responses from the [data](#data) event
-in a [Github issue](https://github.com/fvdm/nodejs-tk102/issues) (public) or
-contact me [directly](https://frankl.in/contact), your data is handled
-confidentially.
+If you can, please provide multiple responses from the [data](#data)
+event in a [Github issue](https://github.com/fvdm/nodejs-tk102/issues)
+(public) or contact me [directly](https://frankl.in/contact), your data
+is handled confidentially. Preferably leave the device tracking with an
+interval of 30 seconds or less for about 3 to 5 minutes outdoors or near
+a window. This way I can figure out the data format and various states
+the tracker reports about itself to the server.
 
 
 Unlicense
