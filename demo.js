@@ -6,8 +6,15 @@
 
 var tk102 = require ('./');
 
+function output (name, data) {
+  console.log ('\nEvent: ' + name);
+  console.dir (data, {
+    colors: String (process.env.TERM) .match (/color$/)
+  });
+}
+
 tk102.createServer ({
   port: 1337
 });
 
-tk102.on ('log', console.log);
+tk102.on ('log', output);
