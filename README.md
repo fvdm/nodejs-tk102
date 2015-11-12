@@ -229,7 +229,7 @@ server.on ('error', function (err) {
 ### log
 **( name, data )**
 
-Emitted on of the above events.
+Emitted on any of the above events.
 Useful for debugging and logging.
 
 argument | type   | description
