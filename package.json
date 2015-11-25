@@ -30,5 +30,25 @@
   "license": "Unlicense",
   "scripts": {
     "test": "node test.js"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Franklin van de Meent",
+      "email": "fr@nkl.in",
+      "url": "https://github.com/fvdm",
+      "contributions": 120,
+      "additions": 2004,
+      "deletions": 1113,
+      "hireable": true
+    },
+    {
+      "name": "Sérgio Neves Sacenti",
+      "email": null,
+      "url": "https://github.com/sergions80",
+      "contributions": 1,
+      "additions": 6,
+      "deletions": 1,
+      "hireable": null
+    }
+  ]
 }
