@@ -17,7 +17,8 @@
   "main": "tk102.js",
   "dependencies": {},
   "devDependencies": {
-    "dotest": "^1.2.0"
+    "dotest": "^1.2.0",
+    "eslint": "^2.5.1"
   },
   "optionalDependencies": {},
   "engines": {
@@ -31,7 +32,7 @@
   ],
   "license": "Unlicense",
   "scripts": {
-    "test": "node test.js"
+    "test": "eslint . && node test.js"
   },
   "contributors": [
     {
