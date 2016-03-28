@@ -33,7 +33,6 @@ dotest.add ('checksum valid', function () {
   var data = app.checksum (input);
 
   dotest.test ()
-    .isBoolean ('fail', 'data', data)
     .isExactly ('fail', 'data', data, true)
     .done ();
 });
@@ -43,7 +42,6 @@ dotest.add ('checksum invalid', function () {
   var data = app.checksum (input.toLowerCase ());
 
   dotest.test ()
-    .isBoolean ('fail', 'data', data)
     .isExactly ('fail', 'data', data, false)
     .done ();
 });
@@ -55,7 +53,6 @@ dotest.add ('parse valid', function () {
   dotest.test ()
     .isObject ('fail', 'data', data)
     .isExactly ('fail', 'data.raw', data && data.raw, input)
-    .isBoolean ('fail', 'data.checksum', data && data.checksum)
     .isExactly ('fail', 'data.checksum', data && data.checksum, true)
     .isExactly ('fail', 'data.phone', data && data.phone, '0031698765432')
     .isExactly ('fail', 'data.imei', data && data.imei, '123456789012345')
