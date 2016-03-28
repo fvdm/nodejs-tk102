@@ -22,7 +22,7 @@ dotest.add ('Module', function () {
     .isObject ('fail', '.settings', app && app.settings)
     .isFunction ('fail', '.event', app && app.event)
     .isFunction ('fail', '.createServer', app && app.createServer)
-    .isFunction ('fail', '.closeServer', app && app.closeServer);
+    .isFunction ('fail', '.closeServer', app && app.closeServer)
     .isFunction ('fail', '.fixGeo', app && app.fixGeo)
     .isFunction ('fail', '.checksum', app && app.checksum)
     .isFunction ('fail', '.parse', app && app.parse)
