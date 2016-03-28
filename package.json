@@ -34,6 +34,7 @@
   "scripts": {
     "test": "eslint . && node test.js"
   },
+  "tonicExampleFilename": "example.js",
   "contributors": [
     {
       "name": "Franklin van de Meent",
