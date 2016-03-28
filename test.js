@@ -8,129 +8,81 @@ License:      Unlicense / Public Domain (see UNLICENSE file)
               (https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE)
 */
 
+var dotest = require ('dotest');
 var app = require ('./');
-var errors = 0;
-var queue = [];
-var next = 0;
 
 // Str to work with
 var input = '1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123';
 
-// handle exits
 
-process.on ('exit', function () {
-  if (errors === 0) {
-    console.log ('\n\u001b[1mDONE, no errors.\u001b[0m\n');
-    process.exit (0);
-  } else {
-    console.log ('\n\u001b[1mFAIL, ' + errors + ' error' + (errors > 1 ? 's' : '') + ' occurred!\u001b[0m\n');
-    process.exit (1);
-  }
+// module
+dotest.add ('Module', function () {
+  dotest.test ()
+    .isObject ('fail', 'exports', app)
+    .isObject ('fail', '.settings', app && app.settings)
+    .isFunction ('fail', '.event', app && app.event)
+    .isFunction ('fail', '.createServer', app && app.createServer)
+    .isFunction ('fail', '.fixGeo', app && app.fixGeo)
+    .isFunction ('fail', '.checksum', app && app.checksum)
+    .isFunction ('fail', '.parse', app && app.parse)
+    .done ();
 });
-
-// prevent errors from killing the process
-process.on ('uncaughtException', function (err) {
-  console.log ();
-  console.log (err.stack);
-  console.trace ();
-  console.log ();
-  errors++;
-});
-
-// Queue to prevent flooding
-function doNext () {
-  next++;
-  if (queue [next]) {
-    queue [next] ();
-  }
-}
-
-// doTest( passErr, 'methods', [
-//   ['feeds', typeof feeds === 'object']
-// ])
-function doTest (err, label, tests) {
-  var testErrors = [];
-
-  if (err instanceof Error) {
-    console.log (label + ': \u001b[1m\u001b[31mERROR\u001b[0m\n');
-    console.dir (err, { depth: 10, colors: true });
-    console.log ();
-    console.log (err.stack);
-    console.log ();
-    errors++;
-  } else {
-    tests.forEach (function (test) {
-      if (test [1] !== true) {
-        testErrors.push (test [0]);
-        errors++;
-      }
-    });
-
-    if (testErrors.length === 0) {
-      console.log (label + ': \u001b[1m\u001b[32mok\u001b[0m');
-    } else {
-      console.log (label + ': \u001b[1m\u001b[31mfailed\u001b[0m (' + testErrors.join(', ') + ')');
-    }
-  }
-
-  doNext ();
-}
 
 // checksum valid
-queue.push (function () {
+dotest.add ('checksum valid', function () {
   var data = app.checksum (input);
 
-  doTest (null, 'checksum valid', [
-    ['type', typeof data === 'boolean'],
-    ['value', data === true]
-  ]);
+  dotest.test ()
+    .isBoolean ('fail', 'data', data)
+    .isExactly ('fail', 'data', true)
+    .done ();
 });
 
 // checksum invalid
-queue.push (function () {
+dotest.add ('checksum invalid', function () {
   var data = app.checksum (input.toLowerCase ());
 
-  doTest (null, 'checksum invalid', [
-    ['type', typeof data === 'boolean'],
-    ['value', data === false]
-  ]);
+  dotest.test ()
+    .isBoolean ('fail', 'data', data)
+    .isExactly ('fail', 'data', false)
+    .done ();
 });
 
 // parser valid
-queue.push (function () {
+dotest.add ('parse valid', function () {
   var data = app.parse (input);
 
-  doTest (data, 'parse valid', [
-    ['type', data instanceof Object],
-    ['raw', data.raw === input],
-    ['checksum type', typeof data.checksum === 'boolean'],
-    ['checksum value', data.checksum === true],
-    ['phone', data.phone === '0031698765432'],
-    ['imei', data.imei === '123456789012345'],
-    ['datetime', data.datetime === '2012-03-29 23:16'],
-    ['gps type', data.gps instanceof Object],
-    ['gps.date', data.gps.date === '2012-03-29'],
-    ['gps.time', data.gps.time === '21:16:57.000'],
-    ['gps.signal', data.gps.signal === 'full'],
-    ['gps.fix', data.gps.fix === 'active'],
-    ['geo type', data.geo instanceof Object],
-    ['geo.latitude', data.geo.latitude === 52.217078],
-    ['geo.longitude', data.geo.longitude === 5.279595],
-    ['geo.bearing', data.geo.bearing === 273],
-    ['speed type', data.speed instanceof Object],
-    ['speed.knots', data.speed.knots === 0]
-  ]);
+  dotest.test ()
+    .isObject ('fail', 'data', data)
+    .isExactly ('fail', 'data.raw', data && data.raw, input)
+    .isBoolean ('fail', 'data.checksum', data && data.checksum)
+    .isExactly ('fail', 'data.checksum', data && data.checksum, true)
+    .isExactly ('fail', 'data.phone', data && data.phone, '0031698765432')
+    .isExactly ('fail', 'data.imei', data && data.imei, '123456789012345')
+    .isExactly ('fail', 'data.datetime', data && data.datetime, '2012-03-29 23:16')
+    .isObject ('fail', 'data.gps', data && data.gps)
+    .isExactly ('fail', 'data.gps.date', data && data.gps && data.gps.date, '2012-03-29')
+    .isExactly ('fail', 'data.gps.time', data && data.gps && data.gps.time, '21:16:57.000')
+    .isExactly ('fail', 'data.gps.signal', data && data.gps && data.gps.signal, 'full')
+    .isExactly ('fail', 'data.gps.fix', data && data.gps && data.gps.fix, 'active')
+    .isObject ('fail', 'data.geo', data && data.geo)
+    .isExactly ('fail', 'data.geo.latitude', data && data.geo && data.geo.latitude, 52.217078)
+    .isExactly ('fail', 'data.geo.longitude', data && data.geo && data.geo.longitudr, 5.279595)
+    .isExactly ('fail', 'data.geo.bearing', data && data.geo && data.geo.bearing, 273)
+    .isObject ('fail', 'data.speed', data && data.speed)
+    .isExactly ('fail', 'data.speed.knots', data && data.speed && data.speed.knots, 0)
+    .done ();
 });
 
 // parser fail
-queue.push (function () {
+dotest.add ('parse fail', function () {
   var data = app.parse ('invalid input');
 
-  doTest (data, 'parse fail', [
-    ['type', data === null]
-  ]);
+  dotest.test ()
+    .isNull ('fail', 'data', data)
+    .done ();
 });
 
 
 // Start the tests
-queue [0] ();
+dotest.run ();
