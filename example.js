@@ -22,10 +22,12 @@ tk102.on ('track', output);
 
 // wait for server to be ready
 tk102.on ('listening', function (lst) {
+  var client;
+
   console.log ('TK102 server is ready');
 
   // Send data with telnet
-  var client = net.connect (lst.port, function () {
+  client = net.connect (lst.port, function () {
     console.log ('Connected to TK102 server');
     console.log ('Sending GPS data string for processing');
 
