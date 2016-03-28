@@ -195,6 +195,16 @@ tk102.createServer = function (vars) {
   return tk102;
 };
 
+// Graceful close server
+tk102.closeServer = function (callback) {
+  if (!tk102.server) {
+    callback (new Error ('server not started'));
+    return;
+  }
+
+  tk102.server.close (callback);
+};
+
 // Parse GPRMC string
 tk102.parse = function (raw) {
   var data = null;
