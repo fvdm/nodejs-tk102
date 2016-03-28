@@ -34,7 +34,7 @@ dotest.add ('checksum valid', function () {
 
   dotest.test ()
     .isBoolean ('fail', 'data', data)
-    .isExactly ('fail', 'data', true)
+    .isExactly ('fail', 'data', data, true)
     .done ();
 });
 
@@ -44,7 +44,7 @@ dotest.add ('checksum invalid', function () {
 
   dotest.test ()
     .isBoolean ('fail', 'data', data)
-    .isExactly ('fail', 'data', false)
+    .isExactly ('fail', 'data', data, false)
     .done ();
 });
 
@@ -67,7 +67,7 @@ dotest.add ('parse valid', function () {
     .isExactly ('fail', 'data.gps.fix', data && data.gps && data.gps.fix, 'active')
     .isObject ('fail', 'data.geo', data && data.geo)
     .isExactly ('fail', 'data.geo.latitude', data && data.geo && data.geo.latitude, 52.217078)
-    .isExactly ('fail', 'data.geo.longitude', data && data.geo && data.geo.longitudr, 5.279595)
+    .isExactly ('fail', 'data.geo.longitude', data && data.geo && data.geo.longitude, 5.279595)
     .isExactly ('fail', 'data.geo.bearing', data && data.geo && data.geo.bearing, 273)
     .isObject ('fail', 'data.speed', data && data.speed)
     .isExactly ('fail', 'data.speed.knots', data && data.speed && data.speed.knots, 0)
