@@ -1,6 +1,7 @@
 TK102 GPS server
 ================
 
+[![npm](https://img.shields.io/npm/v/tk012.svg?maxAge=3600)](https://github.com/fvdm/nodejs-tk102/blob/master/CHANGELOG.md)
 [![Build Status](https://travis-ci.org/fvdm/nodejs-tk102.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-tk102)
 
 Receive and parse GPS data from Xexun TK102 trackers.
