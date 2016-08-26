@@ -17,7 +17,7 @@
   "main": "tk102.js",
   "dependencies": {},
   "devDependencies": {
-    "dotest": "^1.13.0"
+    "dotest": "^1.13.3"
   },
   "optionalDependencies": {},
   "engines": {
