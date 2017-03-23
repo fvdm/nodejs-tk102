@@ -18,7 +18,7 @@
   "dependencies": {},
   "devDependencies": {
     "coveralls": "^2.12.0",
-    "dotest": "^1.15.2",
+    "dotest": "^2.0.0",
     "eslint": "^3.18.0",
     "istanbul": "^0.4.5"
   },
