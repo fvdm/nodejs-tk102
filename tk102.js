@@ -21,12 +21,13 @@ var specs = [
     var datetime = '';
     var gpsdate = '';
     var gpstime = '';
+    var imei = '';
 
     try {
       raw = raw.trim ();
       str = raw.split (',');
 
-      if (str.length === 18 && str [2] === 'GPRMC') {
+      if ((str.length === 18 || str.length === 28) && str [2] === 'GPRMC') {
         datetime = str [0] .replace (/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function (s, y, m, d, h, i) {
           return '20' + y + '-' + m + '-' + d + ' ' + h + ':' + i;
         });
@@ -38,6 +39,12 @@ var specs = [
         gpstime = str [3] .replace (/([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function (s0, h, i, s, ms) {
           return h + ':' + i + ':' + s + '.' + ms;
         });
+
+        if (str.length === 28) {
+          imei = str [17] .replace ('imei:', '');
+        } else {
+          imei = str [16] .replace ('imei:', '');
+        }
 
         result = {
           raw: raw,
@@ -59,7 +66,7 @@ var specs = [
             kmh: Math.round (str [9] * 1.852 * 1000) / 1000,
             mph: Math.round (str [9] * 1.151 * 1000) / 1000
           },
-          imei: str [16] .replace ('imei:', ''),
+          imei: imei,
           checksum: tk102.checksum (raw)
         };
       }
@@ -193,16 +200,6 @@ tk102.createServer = function (vars) {
   tk102.server.listen (tk102.settings.port, tk102.settings.ip);
 
   return tk102;
-};
-
-// Graceful close server
-tk102.closeServer = function (callback) {
-  if (!tk102.server) {
-    callback (new Error ('server not started'));
-    return;
-  }
-
-  tk102.server.close (callback);
 };
 
 // Parse GPRMC string
