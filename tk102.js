@@ -4,8 +4,8 @@ Description:  TK102 GPS server for Node.js
 Author:       Franklin van de Meent (https://frankl.in)
 Source:       https://github.com/fvdm/nodejs-tk102
 Feedback:     https://github.com/fvdm/nodejs-tk102/issues
-License:      Unlicense / Public Domain (see UNLICENSE file)
-              (https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE)
+License:      Unlicense (Public Domain, see UNLICENSE file)
+              <https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE>
 */
 
 var net = require ('net');
@@ -71,6 +71,7 @@ var specs = [
   }
 ];
 
+
 // defaults
 tk102.settings = {
   ip: '0.0.0.0',
@@ -80,13 +81,28 @@ tk102.settings = {
 };
 
 
-// Emit event
+/**
+ * Emit an event
+ * and duplicate to 'log' event
+ *
+ * @param   {string}    name   Event name
+ * @param   {string}    value  Event value
+ * @return  {void}
+ */
+
 tk102.event = function (name, value) {
   tk102.emit (name, value);
   tk102.emit ('log', name, value);
 };
 
-// Catch uncaught exceptions (server kill)
+
+/**
+ * Catch uncaught exceptions (server kill)
+ *
+ * @param   {Error}  err  Error cause
+ * @return  {void}
+ */
+
 process.on ('uncaughtException', function (err) {
   var error = new Error ('uncaught exception');
 
@@ -95,7 +111,18 @@ process.on ('uncaughtException', function (err) {
   tk102.event ('error', error);
 });
 
-// Create server
+
+/**
+ * Create server
+ *
+ * @param   {object}  [vars]                 Override default settings
+ * @param   {string}  [vars.ip=0.0.0.0]      Listen on IP
+ * @param   {number}  [vars.port=0]          Listen on port, `0` = random
+ * @param   {number}  [vars.connections=10]  Max server connections
+ * @param   {number}  [vars.timeout=10]      Socket timeout in seconds
+ * @return  {object}  tk102                  The server
+ */
+
 tk102.createServer = function (vars) {
   var key;
 
@@ -195,7 +222,15 @@ tk102.createServer = function (vars) {
   return tk102;
 };
 
-// Graceful close server
+
+/**
+ * Graceful close server
+ *
+ * @callback  callback
+ * @param     {function}  callback  `(err)`
+ * @return    {void}
+ */
+
 tk102.closeServer = function (callback) {
   if (!tk102.server) {
     callback (new Error ('server not started'));
@@ -205,7 +240,14 @@ tk102.closeServer = function (callback) {
   tk102.server.close (callback);
 };
 
-// Parse GPRMC string
+
+/**
+ * Parse GPRMC string
+ *
+ * @param   {string}  raw   Command text from device
+ * @return  {object}  data  Parsed data
+ */
+
 tk102.parse = function (raw) {
   var data = null;
   var i = 0;
@@ -218,7 +260,15 @@ tk102.parse = function (raw) {
   return data;
 };
 
-// Clean geo positions, with 6 decimals
+
+/**
+ * Clean geo positions, with 6 decimals
+ *
+ * @param   {string}  one  Geo position
+ * @param   {string}  two  Geo direction: N W S E
+ * @return  {float}        Decimal geo position
+ */
+
 tk102.fixGeo = function (one, two) {
   var minutes = one.substr (-7, 7);
   var degrees = parseInt (one.replace (minutes, ''), 10);
@@ -229,7 +279,14 @@ tk102.fixGeo = function (one, two) {
   return Math.round (one * 1000000) / 1000000;
 };
 
-// Check checksum in raw string
+
+/**
+ * Check checksum in raw string
+ *
+ * @param   {string}   raw    Command text from device
+ * @return  {boolean}  check  Checksum result
+ */
+
 tk102.checksum = function (raw) {
   var str = raw.trim () .split (/[,*#]/);
   var strsum = parseInt (str [15], 10);
@@ -244,6 +301,7 @@ tk102.checksum = function (raw) {
   check = parseInt (check.toString (16), 10);
   return (check === strsum);
 };
+
 
 // ready
 module.exports = tk102;
