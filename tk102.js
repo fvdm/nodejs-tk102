@@ -85,8 +85,8 @@ tk102.settings = {
  * Emit an event
  * and duplicate to 'log' event
  *
- * @param   {string}    name   Event name
- * @param   {string}    value  Event value
+ * @param   {string}  name   Event name
+ * @param   {string}  value  Event value
  * @return  {void}
  */
 
@@ -116,7 +116,7 @@ process.on ('uncaughtException', function (err) {
  * Create server
  *
  * @param   {object}  [vars]                 Override default settings
- * @param   {string}  [vars.ip=0.0.0.0]      Listen on IP
+ * @param   {string}  [vars.ip='0.0.0.0']    Listen on IP
  * @param   {number}  [vars.port=0]          Listen on port, `0` = random
  * @param   {number}  [vars.connections=10]  Max server connections
  * @param   {number}  [vars.timeout=10]      Socket timeout in seconds
