@@ -114,20 +114,38 @@ property    | description
 raw         | the input string without trailing whitespace
 datetime    | the device 24h clock
 phone       | the admin phonenumber that initiated this tracking
-gps         |
-- date      | date as received from GPS
-- time      | time in 24h UTC as received from GPS
-- signal    | signal strength, either _full_ or _low_
-- fix       | GPS fix, either _active_ or _invalid_
-geo         |
-- latitude  | position latitude
-- longitude | position longitude
-- bearing   | direction in degrees
-speed       |
-- knots     | speed in knots per hour
-- kmh       | speed in kilometer per hour
-- mph       | speed in miles per hour
 imei        | device IMEI
+gps         | information about the GPS signal
+geo         | geographical position and direction
+speed       | travel speed
+
+
+#### gpsObject.gps
+
+property    | description
+:-----------|:---------------------------------------
+date        | date as received from GPS
+time        | time in 24h UTC as received from GPS
+signal      | signal strength, either _full_ or _low_
+fix         | GPS fix, either _active_ or _invalid_
+
+
+#### gpsObject.geo
+
+property    | description
+:-----------|:--------------------
+latitude    | position latitude
+longitude   | position longitude
+bearing     | direction in degrees
+
+
+#### gpsObject.speed
+
+property    | description
+:-----------|:----------------------------------
+knots       | speed in knots per hour (original)
+kmh         | speed in kilometer per hour
+mph         | speed in miles per hour
 
 
 ### data
