@@ -109,15 +109,15 @@ server.on ('track', function (gps) {
 })
 ```
 
-property    | description
-:-----------|:--------------------------------------------------
-raw         | the input string without trailing whitespace
-datetime    | the device 24h clock
-phone       | the admin phonenumber that initiated this tracking
-imei        | device IMEI
-gps         | information about the GPS signal
-geo         | geographical position and direction
-speed       | travel speed
+property                 | description
+:------------------------|:--------------------------------------------------
+raw                      | the input string without trailing whitespace
+datetime                 | the device 24h clock
+phone                    | the admin phonenumber that initiated this tracking
+imei                     | device IMEI
+[gps](#gpsobjectgps)     | information about the GPS signal
+[geo](#gpsobjectgeo)     | geographical position and direction
+[speed](#gpsobjectspeed) | travel speed
 
 
 #### gpsObject.gps
