@@ -17,12 +17,8 @@
   "main": "tk102.js",
   "dependencies": {},
   "devDependencies": {
-    "coveralls": "^2.12.0",
-    "dotest": "^2.0.0",
-    "eslint": "^3.18.0",
-    "istanbul": "^0.4.5"
+    "dotest": "^2.3.0"
   },
-  "optionalDependencies": {},
   "engines": {
     "node": ">=4.0.0"
   },
