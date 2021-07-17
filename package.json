@@ -1,8 +1,8 @@
 {
   "author": {
-    "name": "Franklin van de Meent",
-    "email": "fr@nkl.in",
-    "url": "https://frankl.in"
+    "name": "Franklin",
+    "email": "info@fvdm.com",
+    "url": "https://fvdm.com"
   },
   "name": "tk102",
   "description": "Unofficial Xexun TK102 GPS server",
@@ -32,25 +32,5 @@
   "scripts": {
     "test": "dotest"
   },
-  "tonicExampleFilename": "example.js",
-  "contributors": [
-    {
-      "name": "Franklin van de Meent",
-      "email": "fr@nkl.in",
-      "url": "https://github.com/fvdm",
-      "contributions": 120,
-      "additions": 2004,
-      "deletions": 1113,
-      "hireable": true
-    },
-    {
-      "name": "Sérgio Neves Sacenti",
-      "email": null,
-      "url": "https://github.com/sergions80",
-      "contributions": 1,
-      "additions": 6,
-      "deletions": 1,
-      "hireable": null
-    }
-  ]
+  "tonicExampleFilename": "example.js"
 }
