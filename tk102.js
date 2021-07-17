@@ -1,11 +1,9 @@
 /*
 Name:         tk102
 Description:  TK102 GPS server for Node.js
-Author:       Franklin van de Meent (https://frankl.in)
+Author:       Franklin (https://fvdm.com)
 Source:       https://github.com/fvdm/nodejs-tk102
-Feedback:     https://github.com/fvdm/nodejs-tk102/issues
 License:      Unlicense (Public Domain, see UNLICENSE file)
-              <https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE>
 */
 
 var net = require ('net');
