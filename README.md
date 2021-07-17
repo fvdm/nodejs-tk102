@@ -2,11 +2,8 @@ TK102 GPS server - DEPRECATED
 ================
 
 This package is no longer being maintained.
-If you wish to take over the project, drop me a line on issue [#36](https://github.com/fvdm/nodejs-tk102/issues/36).
 
 ---
-
-[![Build Status](https://travis-ci.org/fvdm/nodejs-tk102.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-tk102)
 
 Receive and parse GPS data from Xexun TK102 trackers.
 
@@ -314,12 +311,11 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-For more information, please refer to <http://unlicense.org>
+For more information, please refer to <http:s//unlicense.org>
 
 
 Author
 ------
 
-Franklin
-| [Website](https://fvdm.com)
-| [Github](https://github.com/fvdm)
+[Franklin](https://fvdm.com)
+| [Buy me a coffee](https://fvdm.com/donating)
