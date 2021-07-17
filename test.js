@@ -1,11 +1,8 @@
 /*
 Name:         tk102 - test.js
 Description:  Test script for TK102 GPS server for node.js
-Author:       Franklin van de Meent (https://frankl.in)
 Source:       https://github.com/fvdm/nodejs-tk102
-Feedback:     https://github.com/fvdm/nodejs-tk102/issues
 License:      Unlicense / Public Domain (see UNLICENSE file)
-              (https://github.com/fvdm/nodejs-tk102/raw/master/UNLICENSE)
 */
 
 var dotest = require ('dotest');
